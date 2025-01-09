@@ -25,6 +25,7 @@ class EventSignup(models.Model):
         (GENDER_MALE,'male'),
         (GENDER_FEMALE,'female'),
     ]
+    event = models.ForeignKey(Event,on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     age = models.DateField()
