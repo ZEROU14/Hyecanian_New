@@ -1,1 +1,17 @@
+# Ignore media folder
 media/
+
+# Ignore virtual environment
+venv/
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore Django migration files
+*.log
+*.pot
+*.pyc
+*.so
+*.mo
+*.pyo
