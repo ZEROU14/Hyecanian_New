@@ -10,6 +10,7 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = ['link','title','description','evtry_price','datetime_created','title_picture','seconde_picture','category','location']
    
+
 class EventSignUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventSignup

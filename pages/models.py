@@ -7,14 +7,24 @@ class Category(models.Model):
     description = models.CharField(max_length=500,blank=True)
 
 class Event(models.Model):
+    UPCOMMING_COMPETITION = 'up_comming_competition'
+    INPROGRESS_COMPETITION = 'in_progress_competition'
+    CLOSED_COMPETITION = 'closed_competition'
+    COMPETITIO_OPTIONS = [
+        (UPCOMMING_COMPETITION, 'up_comming_competition'),
+        (INPROGRESS_COMPETITION, 'in_progress_competition'),
+        (CLOSED_COMPETITION, 'closed_competition')
+    ]
     title = models.CharField(max_length=255)
     description = models.TextField()
     evtry_price = models.PositiveIntegerField()
     datetime_created = models.DateTimeField(auto_now_add=True)
+    event_data = models.DateField(auto_now=True)
     title_picture = models.ImageField(upload_to='event')
     seconde_picture = models.ImageField(upload_to='event')
     category = models.ForeignKey(Category,on_delete=models.PROTECT,related_name='category')
     location = models.CharField(max_length=255)
+    status = models.CharField(choices=COMPETITIO_OPTIONS,max_length=25,default=UPCOMMING_COMPETITION)
     
 
 
