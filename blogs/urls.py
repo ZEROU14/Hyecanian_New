@@ -4,6 +4,7 @@ from .views import *
 
 router = routers.DefaultRouter()
 router.register('blogs',BlogViewSet,basename='blogs')
+router.register('categories', CategoryViewSet,basename='category')
 
 urlpatterns = [
     path('', include(router.urls))

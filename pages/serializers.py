@@ -20,3 +20,14 @@ class EventSignUpSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         event_id = self.context['event_pk']
         return EventSignup.objects.create(event_id = event_id ,**validated_data)
+    
+    
+            
+class CategorySeriaizer(serializers.ModelSerializer):
+    link = serializers.HyperlinkedIdentityField(
+        view_name = 'category-detail',
+        lookup_field = 'pk',
+    )
+    class Meta:
+        model = Category
+        fields = ['link','title','description']

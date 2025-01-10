@@ -4,11 +4,13 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import (
     Event,
-    EventSignup
+    EventSignup,
+    Category
 )
 from .serializers import (
     EventSerializer,
-    EventSignUpSerializer
+    EventSignUpSerializer,
+    CategorySeriaizer
 )
 
 # Create your views here.
@@ -33,4 +35,12 @@ class EventSignupViewSet(ModelViewSet):
         return {'event_pk':self.kwargs['event_pk']}
 
     
+        
+class CategoryViewSet(ModelViewSet):
+    serializer_class = CategorySeriaizer
+    queryset = Category.objects.all()
+    
+  
+    def get_serializer_context(self):
+        return {"request": self.request} 
     
