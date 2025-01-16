@@ -40,11 +40,11 @@ INSTALLED_APPS = [
     'rest_framework',
     # all auth settings
     
-    'allauth',
-    'allauth.account',
+
 
     'pages',
     'blogs',
+    'core'
     
 ]
 
@@ -58,7 +58,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
     
-    "allauth.account.middleware.AccountMiddleware",
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -77,10 +77,7 @@ TEMPLATES = [
                 
                 
                 # allatuh settings  
-                
-                # `allauth` needs this from django
-                'django.template.context_processors.request',
-
+          
 
                 
             ],
@@ -88,15 +85,7 @@ TEMPLATES = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = [
 
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by email
-    'allauth.account.auth_backends.AuthenticationBackend',
-
-    ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -107,7 +96,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
         'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'running',
+        'NAME': 'web1',
         'HOST': 'localhost',
         'USER': 'root',
         'PASSWORD': 'password',
@@ -161,3 +150,6 @@ MEDIA_URL = '/media/'
 # Specify the directory where media files are stored
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+AUTH_USER_MODEL = 'core.CustomUser'

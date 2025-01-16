@@ -27,7 +27,7 @@ class Event(models.Model):
     status = models.CharField(choices=COMPETITIO_OPTIONS,max_length=25,default=UPCOMMING_COMPETITION)
     
 
-
+from django.conf import settings
 class EventSignup(models.Model):
     GENDER_MALE = 'm'
     GENDER_FEMALE = 'f'
@@ -36,8 +36,7 @@ class EventSignup(models.Model):
         (GENDER_FEMALE,'female'),
     ]
     event = models.ForeignKey(Event,on_delete=models.PROTECT)
-    name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.PROTECT)
     age = models.DateField()
     phone_number = models.IntegerField()
     gender = models.CharField(max_length=1,choices=GENDER_OPTIONS)

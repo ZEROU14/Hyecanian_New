@@ -21,7 +21,10 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+    path("__debug__/", include("debug_toolbar.urls")),
     path('admin/', admin.site.urls),
     path('',include('pages.urls')),
-    path('',include('blogs.urls')),
+    path('blog/',include('blogs.urls')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
