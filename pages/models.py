@@ -37,7 +37,7 @@ class Event(models.Model):
     
     def __str__(self):
         return (f"{self.title}")
-
+from django.conf import settings
 class Ticket(models.Model):
     title = models.CharField(max_length=225)
     event = models.ForeignKey(Event,on_delete=models.PROTECT,related_name='tickets')
@@ -46,7 +46,7 @@ class Ticket(models.Model):
     def __str__(self):
         return (f"ticket for event {self.event} with the title {self.title}")
 
-from django.conf import settings
+
 class EventSignup(models.Model):
     GENDER_MALE = 'm'
     GENDER_FEMALE = 'f'
@@ -56,7 +56,7 @@ class EventSignup(models.Model):
     ]
     ticket = models.ForeignKey(Ticket,on_delete=models.PROTECT)
     # event = models.ForeignKey(Event,on_delete=models.PROTECT)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.PROTECT)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.PROTECT,related_name='event_signups')
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     age = models.DateField()

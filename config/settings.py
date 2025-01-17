@@ -151,5 +151,17 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+from datetime import timedelta
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES":('JWT',),
+    "ACCESS_TOKEN_LIFETIME" : timedelta(days=1)
+}
+
+DJOSER = {
+    'SERIALIZERS':{
+        'user_create' : 'core.serializers.UserCreatSerializer',
+        'current_user' : 'core.serializers.UserSerializers'
+    }
+}
 
 AUTH_USER_MODEL = 'core.CustomUser'

@@ -6,6 +6,7 @@ class TicketSerializer(serializers.ModelSerializer):
         model = Ticket
         fields = ['id','title','price','event']
 
+
 class EventSerializer(serializers.ModelSerializer):
     link = serializers.HyperlinkedIdentityField(
             view_name = 'event-detail',
@@ -19,6 +20,7 @@ class EventSerializer(serializers.ModelSerializer):
         fields = ['link','title','description','evtry_price','datetime_created','title_picture','seconde_picture','category','location','tickets']
     
 
+
 class EventSignUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventSignup
@@ -31,8 +33,7 @@ class EventSignUpSerializer(serializers.ModelSerializer):
     #     event_id = self.context['event_pk']
     #     return EventSignup.objects.create(event_id = event_id ,**validated_data)
     
-    
-            
+                
 class CategorySeriaizer(serializers.ModelSerializer):
     link = serializers.HyperlinkedIdentityField(
         view_name = 'category-detail',
