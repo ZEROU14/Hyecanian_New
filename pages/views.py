@@ -1,38 +1,62 @@
+from django.forms import ValidationError
 from django.shortcuts import render
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from .models import (
     Event,
     EventSignup,
-    Category
+    Category,
+    Ticket
 )
 from .serializers import (
     EventSerializer,
     EventSignUpSerializer,
-    CategorySeriaizer
+    CategorySeriaizer,
+    TicketSerializer
 )
 
 # Create your views here.
 class EventViewSet(ModelViewSet):
     serializer_class = EventSerializer
-    queryset = Event.objects.all()
+    queryset = Event.objects.prefetch_related('tickets').all()
     
     def get_serializer_context(self):
         return {"request": self.request} 
-    
+
+class TicketViewSet(ModelViewSet):
+    serializer_class = TicketSerializer
+    queryset = Ticket.objects.all()
     
 class EventSignupViewSet(ModelViewSet):
     serializer_class = EventSignUpSerializer
-    
-    
+    permission_classes = [IsAuthenticated]
     def get_queryset(self):
-        event_pk = self.kwargs['event_pk']
-        return EventSignup.objects.filter(event_id = event_pk).all()
+        ticket_id = self.kwargs['ticket_pk']
+        
+        # user_id = self.request.user.id
+        # user_id = self.kwargs['user_pk']
+        return EventSignup.objects.filter(ticket_id=ticket_id).all()
+
+    def perform_create(self, serializer):
+        ticket_id = self.kwargs['ticket_pk']
+        user_id = self.request.user.id
+        try:
+            ticket = Ticket.objects.get(id=ticket_id)
+        except Ticket.DoesNotExist:
+            raise ValidationError({"error": "این بلیط وجود ندارد."})
+        
+        serializer.save(ticket=ticket,user_id=user_id)
+    
+    
+    # def get_queryset(self):
+    #     event_pk = self.kwargs['event_pk']
+    #     return EventSignup.objects.filter(event_id = event_pk).all()
 
 
-    def get_serializer_context(self):
-        return {'event_pk':self.kwargs['event_pk']}
+    # def get_serializer_context(self):
+    #     return {'event_pk':self.kwargs['event_pk']}
 
     
         
