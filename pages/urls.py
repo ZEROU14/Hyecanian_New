@@ -22,11 +22,12 @@ router = routers.DefaultRouter()
 router.register('tickets', TicketViewSet, basename='tickets')
 router.register('events', EventViewSet,basename='event')
 router.register('categories',CategoryViewSet,basename='category')
+router.register('tags',TagsViewSet,basename='tags')
 
 
 
 # روت تو در تو برای ثبت‌نام‌ها
-tickets_router = NestedDefaultRouter(router, 'tickets', lookup='ticket')
+tickets_router = NestedDefaultRouter(router, 'tickets', lookup='ticket',)
 tickets_router.register('signups', EventSignupViewSet, basename='ticket-signups')
 
 urlpatterns = router.urls + tickets_router.urls

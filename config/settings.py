@@ -38,17 +38,26 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    # all auth settings
-    
+    'rest_framework_simplejwt',
+    'debug_toolbar',
+    'taggit',
+  
 
-
+    # our apps
     'pages',
     'blogs',
-    'core'
+    'core',
     
 ]
 
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
+
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -151,16 +160,24 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING': False,
+    'DEFAULT_AUTHENTICATION_CLASSES' : (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 from datetime import timedelta
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES":('JWT',),
-    "ACCESS_TOKEN_LIFETIME" : timedelta(days=1)
+    "ACCESS_TOKEN_LIFETIME" : timedelta(days=1),
+
 }
 
 DJOSER = {
     'SERIALIZERS':{
         'user_create' : 'core.serializers.UserCreatSerializer',
-        'current_user' : 'core.serializers.UserSerializers'
+        'current_user' : 'core.serializers.UserSerializers',
+        
     }
 }
 

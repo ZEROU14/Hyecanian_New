@@ -3,6 +3,7 @@ from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from .premissions import ReadOnlyorAdmin
 
 from .models import (
     Event,
@@ -14,13 +15,17 @@ from .serializers import (
     EventSerializer,
     EventSignUpSerializer,
     CategorySeriaizer,
-    TicketSerializer
+    TicketSerializer,
+    TagsSerializer
 )
-
+class TagsViewSet(ModelViewSet):
+    serializer_class = TagsSerializer
+    queryset = Ticket.objects.all()
 # Create your views here.
 class EventViewSet(ModelViewSet):
     serializer_class = EventSerializer
     queryset = Event.objects.prefetch_related('tickets').all()
+    permission_classes =[ReadOnlyorAdmin]
     
     def get_serializer_context(self):
         return {"request": self.request} 
@@ -32,6 +37,7 @@ class TicketViewSet(ModelViewSet):
 class EventSignupViewSet(ModelViewSet):
     serializer_class = EventSignUpSerializer
     permission_classes = [IsAuthenticated]
+    queryset = EventSignup.objects.all()
     def get_queryset(self):
         ticket_id = self.kwargs['ticket_pk']
         
@@ -48,16 +54,6 @@ class EventSignupViewSet(ModelViewSet):
             raise ValidationError({"error": "این بلیط وجود ندارد."})
         
         serializer.save(ticket=ticket,user_id=user_id)
-    
-    
-    # def get_queryset(self):
-    #     event_pk = self.kwargs['event_pk']
-    #     return EventSignup.objects.filter(event_id = event_pk).all()
-
-
-    # def get_serializer_context(self):
-    #     return {'event_pk':self.kwargs['event_pk']}
-
     
         
 class CategoryViewSet(ModelViewSet):
