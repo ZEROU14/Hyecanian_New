@@ -47,6 +47,10 @@ INSTALLED_APPS = [
     'pages',
     'blogs',
     'core',
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
     
 ]
 
@@ -105,7 +109,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
         'default': {
         'ENGINE': 'django.db.backends.mysql',
+<<<<<<< HEAD
         'NAME': 'web2',
+=======
+        'NAME': 'web',
+>>>>>>> master
         'HOST': 'localhost',
         'USER': 'root',
         'PASSWORD': 'password',
