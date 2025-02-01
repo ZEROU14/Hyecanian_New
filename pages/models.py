@@ -36,6 +36,7 @@ class Event(models.Model):
         (INPROGRESS_COMPETITION, 'in_progress_competition'),
         (CLOSED_COMPETITION, 'closed_competition')
     ]
+    user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.PROTECT,related_name='event')
     title = models.CharField(max_length=255)
     description = models.TextField()
     datetime_created = models.DateTimeField(auto_now_add=True)
@@ -71,14 +72,14 @@ class EventSignup(models.Model):
         (GENDER_MALE,'male'),
         (GENDER_FEMALE,'female'),
     ]
-    ticket = models.ForeignKey(Ticket,on_delete=models.PROTECT)
+    ticket = models.ForeignKey(Ticket,on_delete=models.PROTECT,related_name='event_ticket')
     # event = models.ForeignKey(Event,on_delete=models.PROTECT)
     user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.PROTECT,related_name='event_signups')
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     age = models.DateField()
     singup_date = models.DateTimeField(auto_now_add=True)
-    phone_number = models.IntegerField()
+    phone_number = models.CharField(max_length=11,unique=True)
     gender = models.CharField(max_length=1,choices=GENDER_OPTIONS)
     incurace_pic = models.ImageField(upload_to='event_signup_incurance')
     id_pic = models.ImageField(upload_to='event_signup_id_pic')
@@ -88,4 +89,4 @@ class EventSignup(models.Model):
     relativ_phone_number = models.IntegerField()
   
     def __str__(self):
-        return (f"Sign up for event :  {self.event} \n for user {self.user} " )
+        return (f"Sign up for event :  {self.ticket} \n for user {self.user} " )
