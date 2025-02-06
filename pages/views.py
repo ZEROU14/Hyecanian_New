@@ -1,12 +1,14 @@
 from django.forms import ValidationError
-from django.shortcuts import render
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from .premissions import ReadOnlyorAdmin
+import os
+from dotenv import load_dotenv
+load_dotenv()
+# from core import permissions
+from .permissions import ReadOnlyorAdmin,PostForUser
+
 from kavenegar import *
-api = KavenegarAPI('346A49326C3579705879686B6854425272424B49744753734B417647326C704A6E5A563565794D333150343D')
-params = { 'sender' : '2000660110' ,'receptor': 'phone_number','message' :'message' }
 
 from .models import (
     Event,
@@ -27,6 +29,7 @@ from .serializers import (
 class TagsViewSet(ModelViewSet):
     serializer_class = TagsSerializer
     queryset = Ticket.objects.all()
+    permission_classes = [IsAdminUser]
 # Create your views here.
 class EventViewSet(ModelViewSet):
     serializer_class = EventSerializer
@@ -39,21 +42,33 @@ class EventViewSet(ModelViewSet):
 class TicketViewSet(ModelViewSet):
     serializer_class = TicketSerializer
     queryset = Ticket.objects.all()
+    permission_classes = [IsAdminUser]
     
 class EventSignupViewSet(ModelViewSet):
     serializer_class = EventSignUpSerializer
-    permission_classes = [IsAuthenticated]
     queryset = EventSignup.objects.all()
+    permission_classes = [PostForUser]
+
+    
+    
+    def list(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            return Response({"detail": "Not allowed."},)
+        return super().list(request, *args, **kwargs)
+
     def get_queryset(self):
         ticket_id = self.kwargs['ticket_pk']
         return EventSignup.objects.filter(ticket_id=ticket_id).all()
-
   
-    
-    
     def perform_create(self, serializer):
         ticket_id = self.kwargs['ticket_pk']
         user_id = self.request.user.id
+
+
+
+        already_signedup = EventSignup.objects.filter(ticket_id=ticket_id,user_id=user_id).first()
+        if already_signedup:
+            raise ValidationError({"detail": "You have already signed up for this ticket."})
         try:
             ticket = Ticket.objects.get(id=ticket_id)
         except Ticket.DoesNotExist:
@@ -64,7 +79,7 @@ class EventSignupViewSet(ModelViewSet):
         if self.validate_user_info(phone_number):
             # Send SMS
             # event_name = serializer.validated_data['event_name']
-            self.send_sms(phone_number, f'Thank you for signing up for !')
+            self.send_sms(phone_number, f'Thank you for signing up for ticket : {ticket} !')
             # Save the information
             serializer.save(ticket=ticket, user_id=user_id)
         else:
@@ -78,7 +93,7 @@ class EventSignupViewSet(ModelViewSet):
 
     def send_sms(self, phone_number, message):
 
-        api = KavenegarAPI('636D7364614A3274347766344C7973514B445937554C5371306D3864514D4D574B417A62572B526A547A773D')
+        api = KavenegarAPI(os.getenv("SMS_API_KEY"))
         try:
             params = {
                 'sender': '2000660110',
@@ -90,9 +105,11 @@ class EventSignupViewSet(ModelViewSet):
             print(e)
         except HTTPException as e:
             print(e)
+
 class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySeriaizer
     queryset = Category.objects.all()
+    permission_classes = [IsAdminUser]
     
   
     def get_serializer_context(self):

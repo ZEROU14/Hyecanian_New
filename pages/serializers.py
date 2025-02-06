@@ -40,8 +40,8 @@ class EventSerializer(serializers.ModelSerializer):
                   'title',
                   'description',
                   'datetime_created'
-                  ,'title_picture'
-                  ,'seconde_picture'
+                  ,'banner_image'
+                  ,'route_image'
                   ,'category'
                   ,'location'
                   ,'gender'

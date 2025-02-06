@@ -1,12 +1,4 @@
-<<<<<<< HEAD
 #!/home/amir/Desktop/we2/Hyecanian_New/venv/bin/python3
-=======
-<<<<<<< HEAD
-#!/home/zerou14/Desktop/DUDES/venv/bin/python3
-=======
-#!/home/amir/Desktop/web/venv/bin/python3
->>>>>>> master
->>>>>>> 48c01ce9e20e23f4a100de5241d28c0319727ecf
 # -*- coding: utf-8 -*-
 import re
 import sys

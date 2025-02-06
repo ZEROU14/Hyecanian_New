@@ -1,4 +1,3 @@
-
 from django.db import models
 from django.conf import settings
 
@@ -41,8 +40,8 @@ class Event(models.Model):
     description = models.TextField()
     datetime_created = models.DateTimeField(auto_now_add=True)
     event_data = models.DateField(auto_now=True)
-    title_picture = models.ImageField(upload_to='event')
-    seconde_picture = models.ImageField(upload_to='event')
+    banner_image = models.ImageField(upload_to='event')
+    route_image = models.ImageField(upload_to='event')
     category = models.ForeignKey(Category,on_delete=models.PROTECT,related_name='category')
     location = models.CharField(max_length=255)
     status = models.CharField(choices=COMPETITIO_OPTIONS,max_length=25,default=UPCOMMING_COMPETITION)
@@ -62,7 +61,7 @@ class Ticket(models.Model):
     price = models.IntegerField()
 
     def __str__(self):
-        return (f"ticket for event {self.event} with the title {self.title}")
+        return (f"ticket for event {self.event} ")
 
 
 class EventSignup(models.Model):
@@ -73,20 +72,23 @@ class EventSignup(models.Model):
         (GENDER_FEMALE,'female'),
     ]
     ticket = models.ForeignKey(Ticket,on_delete=models.PROTECT,related_name='event_ticket')
-    # event = models.ForeignKey(Event,on_delete=models.PROTECT)
     user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.PROTECT,related_name='event_signups')
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     age = models.DateField()
     singup_date = models.DateTimeField(auto_now_add=True)
-    phone_number = models.CharField(max_length=11,unique=True)
+    phone_number = models.CharField(max_length=11)
     gender = models.CharField(max_length=1,choices=GENDER_OPTIONS)
     incurace_pic = models.ImageField(upload_to='event_signup_incurance')
     id_pic = models.ImageField(upload_to='event_signup_id_pic')
     state = models.CharField(max_length=255,)
     relativ_name = models.CharField(max_length=255)
     relativ_last_name = models.CharField(max_length=255)
-    relativ_phone_number = models.IntegerField()
+    relativ_phone_number = models.CharField(max_length=11)
+
+    class Meta:
+        unique_together = ('ticket', 'phone_number')
+     
   
     def __str__(self):
-        return (f"Sign up for event :  {self.ticket} \n for user {self.user} " )
+        return (f"Sign up for Ticket:  {self.ticket}  for user {self.user} " )

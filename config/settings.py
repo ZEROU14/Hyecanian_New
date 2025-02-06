@@ -11,17 +11,18 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-import os
-from dotenv import load_dotenv
-load_dotenv()
+from environ import Env
+env = Env()
+env.read_env()
+# load_dotenv()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+SECRET_KEY = env.str("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -48,10 +49,6 @@ INSTALLED_APPS = [
     'pages',
     'blogs',
     'core',
-<<<<<<< HEAD
-=======
-
->>>>>>> master
     
 ]
 
@@ -110,15 +107,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
         'default': {
         'ENGINE': 'django.db.backends.mysql',
-<<<<<<< HEAD
         'NAME': 'web',
-=======
-<<<<<<< HEAD
-        'NAME': 'web2',
-=======
-        'NAME': 'web',
->>>>>>> master
->>>>>>> 48c01ce9e20e23f4a100de5241d28c0319727ecf
         'HOST': 'localhost',
         'USER': 'root',
         'PASSWORD': 'password',
@@ -173,8 +162,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+
 REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
+    'DEFAULT_PERMISSION_CLASSES': [],
     'DEFAULT_AUTHENTICATION_CLASSES' : (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
@@ -183,13 +174,11 @@ from datetime import timedelta
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES":('JWT',),
     "ACCESS_TOKEN_LIFETIME" : timedelta(days=1),
-
 }
-
 DJOSER = {
     'SERIALIZERS':{
-        'user_create' : 'core.serializers.UserCreatSerializer',
-        'current_user' : 'core.serializers.UserSerializers',
+        'user_create' : 'core.serializers.CustomUserCreateSerializer',
+        'current_user' : 'core.serializers.CustomUserSerializer',
         
     }
 }
