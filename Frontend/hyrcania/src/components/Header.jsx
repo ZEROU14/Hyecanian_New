@@ -9,7 +9,6 @@ function Header() {
         className="absolute inset-0 bg-cover bg-center opacity-50 bg-[url('./components/images/headerBg.jpg')]"
       ></div>
 
-
       <div className="relative z-10">
         <div className="flex items-center ">
           <Link to="/" className="text-3xl font-bold text-white">
@@ -42,7 +41,9 @@ function Header() {
         </div>
 
         <div className="text-white text-center mt-60 text-6xl">
-          <h6>Run fast, run Free</h6>
+          <h1 style={{ fontStyle: "normal", fontWeight: "700", fontFamily: "'Noto Sans', sans-serif" }}>
+            Run fast, run Free
+          </h1>
         </div>
       </div>
     </header>
