@@ -2,87 +2,142 @@ import { ChevronRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import {
-    InputOTP,
-    InputOTPGroup,
-    InputOTPSeparator,
-    InputOTPSlot,
-} from "@/components/ui/input-otp"
-
 import { Separator } from "../ui/separator";
 import { Textarea } from "../ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area"; // Ensure correct import
 
-const TicketForm = () => {
-    return (
-        <div className="flex flex-col w-full space-y-6 p-6">
-            {/* Header Section */}
-            <div className="flex justify-between items-center w-full">
-                <h1 className="text-4xl font-bold text-gray-900">Ticket for Event</h1>
-                <Button className="flex items-center rounded-full gap-2">
-                    Next
-                    <ChevronRight />
-                </Button>
+const EventDetail = () => {
+  return (
+    <div className="flex flex-col w-full space-y-6 p-6" data-oid="2ylmg:7">
+      {/* Header Section */}
+      <div
+        className="flex justify-between items-center w-full"
+        data-oid="sor70ij"
+      >
+        <h1 className="text-4xl font-bold text-gray-900" data-oid="ndysfdv">
+          Ticket for event
+        </h1>
+        <Button
+          className="flex items-center rounded-full gap-2"
+          data-oid="2mxzu-z"
+        >
+          Next
+          <ChevronRight data-oid="j790-w8" />
+        </Button>
+      </div>
+
+      {/* Event Form Section */}
+      <div
+        className="h-[600px] w-full bg-transparent border-2 rounded-lg border-gray-300"
+        data-oid="wh:tt--"
+      >
+        {/* Banner Image Placeholder */}
+        <div
+          className="bg-gray-300 w-full h-[200px] rounded-t-lg"
+          data-oid="s7ehj3k"
+        ></div>
+
+        {/* Scrollable Content */}
+        <ScrollArea className="h-[400px] " data-oid="00kuvuc">
+          <div
+            className="mx-10 my-4 grid grid-cols-2 gap-x-10 gap-y-6 items-start"
+            data-oid="lpiwx8s"
+          >
+            {/* Event Name */}
+            <div className="flex flex-col" data-oid="bfh-s08">
+              <Label className="text-gray-800 font-bold" data-oid="oke2edx">
+                Event Name
+              </Label>
+              <Label className="text-xs text-gray-500" data-oid="5ash.02">
+                Enter your event name
+              </Label>
+            </div>
+            <Input
+              className="w-[300px] bg-gray-100 border border-gray-300 rounded-md p-2"
+              placeholder="Event Name"
+              data-oid="xs1-qph"
+            />
+
+            {/* Separator */}
+            <div className="col-span-2" data-oid="zslchoj">
+              <Separator data-oid="le4kffj" />
             </div>
 
-            <div className="flex flex-row bg-transparent border-2 rounded-lg border-gray-300">
-                <div class="basis-1/2">
-                    <div className="flex flex-col mx-10 my-10 gap-y-5">
-                        <div className="flex flex-col">
-                            <Label className="text-gray-800 font-bold">Race Name</Label>
-                            <Label className="text-xs text-gray-500">Give your race name Ex. Half marathon competitive</Label>
-                        </div>
-                        <Input className="w-[300px] bg-gray-100 border border-gray-300 rounded-md p-2" placeholder="race name" />
-                        <div className="flex flex-col">
-                            <Label className="text-gray-800 font-bold">Distance (in Km)</Label>
-                            <Label className="text-xs text-gray-500">Enter the total distance of the race</Label>
-                        </div>
-                        <Input className="w-[300px] bg-gray-100 border border-gray-300 rounded-md p-2" placeholder="race name" />
-                        <div className="flex flex-col">
-                            <Label className="text-gray-800 font-bold">Distance (in Km)</Label>
-                            <Label className="text-xs text-gray-500">Enter the total distance of the race</Label>
-                        </div>
-                        <div className="flex flex-row items-center gap-x-2">
-                            <InputOTP maxLength={3}>
-                                <InputOTPGroup>
-                                    <InputOTPSlot index={0} />
-                                    <InputOTPSlot index={1} />
-                                    <InputOTPSlot index={2} />
-                                </InputOTPGroup>
-                            </InputOTP>
-                            <label className="description">km</label>
-                        </div>
-                        <div className="flex flex-col">
-                            <Label className="text-gray-800 font-bold ">Local Starting Time</Label>
-                            <Label className="text-xs text-gray-500">Specify the local start time for your race</Label>
-                        </div>
-                        <Input type="date" className="w-[300px] bg-gray-100 border border-gray-300 rounded-md p-2" placeholder="pick date" />
-                        <div className="flex flex-col">
-                            <Label className="text-gray-800 font-bold ">Price</Label>
-                            <Label className="text-xs text-pretty
- text-gray-500">Specify the entry fee for the event, including the currency, so participants know the cost of registration.</Label>
-                        </div>
-                        <Input className="w-[300px] bg-gray-100 border border-gray-300 rounded-md p-2" placeholder="ticket price" />
-                    </div>
-                </div>
-                <div
-                    style={{
-                        backgroundColor: "#d6d6d6",
-                    }}
-                    className="w-[1px] h-full rounded-full"
-                ></div>
-                <div class="basis-1/2 flex flex-col ">
-                    <div style={{
-                        backgroundColor: "#434343"
-                    }} className="flex bg-gray-300 rounded-tr-sm w-full h-[40px] place-content-center"><label style={{
-                        color: "#F9F9F9"
-                    }} className="my-2 description">Your Tickets</label></div>
-                </div>
-
-
+            {/* Description */}
+            <div className="flex flex-col" data-oid="hi6n5t2">
+              <Label className="text-gray-800 font-bold" data-oid="rle-829">
+                Description
+              </Label>
+              <Label className="text-xs text-gray-500" data-oid="5xruxn6">
+                Provide a brief description of your event.
+              </Label>
             </div>
-        </div>
-    );
+            <Textarea
+              className="w-[300px] h-[100px] bg-gray-100 border border-gray-300 rounded-md p-2"
+              placeholder="Event Information."
+              data-oid="tavgwyl"
+            />
+
+            {/* Separator */}
+            <div className="col-span-2" data-oid="g8fidqa">
+              <Separator data-oid=".t924go" />
+            </div>
+          </div>
+
+          {/* Schedule Section */}
+          <h2
+            className="mx-10 my-4 text-xl font-bold text-gray-900"
+            data-oid="t5wxcxg"
+          >
+            Schedule
+          </h2>
+          <div
+            className="mx-10 my-4 grid grid-cols-2 gap-x-10 gap-y-6 items-start"
+            data-oid="zeuje.f"
+          >
+            {/* Location */}
+            <div className="flex flex-col" data-oid="73805oq">
+              <Label className="text-gray-800 font-bold" data-oid="r:79fyu">
+                Location
+              </Label>
+              <Label className="text-xs text-gray-500" data-oid="2ubq3.3">
+                Enter the location of your event.
+              </Label>
+            </div>
+            <Input
+              className="w-[300px] bg-gray-100 border border-gray-300 rounded-md p-2"
+              placeholder="Location"
+              data-oid="-0yyq4y"
+            />
+
+            {/* Starting Day */}
+            <div className="flex flex-col" data-oid="y192n84">
+              <Label className="text-gray-800 font-bold" data-oid="4z7vchv">
+                Starting Day
+              </Label>
+            </div>
+            <Input
+              type="date"
+              className="w-[300px] bg-gray-100 border border-gray-300 rounded-md p-2"
+              data-oid="pxc5req"
+            />
+
+            {/* Ending Day */}
+            <div className="flex flex-col" data-oid="v.p.kpg">
+              <Label className="text-gray-800 font-bold" data-oid="dm:qw70">
+                Ending Day
+              </Label>
+            </div>
+            <Input
+              type="date"
+              className="w-[300px] bg-gray-100 border border-gray-300 rounded-md p-2"
+              data-oid="ahn:10g"
+            />
+          </div>
+        </ScrollArea>
+      </div>
+    </div>
+  );
 };
 
-export default TicketForm;
+export default EventDetail;
