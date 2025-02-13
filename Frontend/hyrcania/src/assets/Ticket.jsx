@@ -1,0 +1,36 @@
+import React from 'react';
+
+const Ticket = () => {
+  return (
+    <div className="flex justify-center items-center p-4">
+      <div className="bg-white shadow-md rounded-lg overflow-hidden w-11/12 md:w-1/2 lg:w-2/3 xl:w-1/3">
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full md:w-1/2">
+            <img
+              src="your-image-url.jpg"
+              alt="Marathon"
+              className="w-full h-48 object-cover"
+            />
+          </div>
+          <div className="w-full md:w-1/2 p-4">
+            <h3 className="text-lg font-semibold">For 17 years old</h3>
+            <h2 className="text-xl font-bold">Saturday Half Marathon</h2>
+            <p className="text-gray-600">Distance: 21.10 Km</p>
+            <h4 className="text-2xl font-bold text-green-600">12 EUR</h4>
+            <p className="text-gray-600">SEP. 12, 2025 10:00AM</p>
+          </div>
+        </div>
+        <div className="p-4 bg-gray-100 text-center">
+          <img
+            src="qr-code-url.png"
+            alt="QR Code"
+            className="w-32 h-32 mx-auto"
+          />
+          <p className="text-gray-600 mt-2">Hyrcania</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Ticket;

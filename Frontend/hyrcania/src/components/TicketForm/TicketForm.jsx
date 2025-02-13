@@ -1,4 +1,4 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Component } from "lucide-react";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -8,7 +8,9 @@ import {
     InputOTPSeparator,
     InputOTPSlot,
 } from "@/components/ui/input-otp"
-
+import Ticket from "@/assets/Ticket";
+import ticketImage from "../images/ticket.jpeg";
+import QR from "../images/QR.png"
 import { Separator } from "../ui/separator";
 import { Textarea } from "../ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area"; // Ensure correct import
@@ -26,7 +28,7 @@ const TicketForm = () => {
             </div>
 
             <div className="flex flex-row bg-transparent border-2 rounded-lg border-gray-300">
-                <div class="basis-1/2">
+                <div className="basis-1/2">
                     <div className="flex flex-col mx-10 my-10 gap-y-5">
                         <div className="flex flex-col">
                             <Label className="text-gray-800 font-bold">Race Name</Label>
@@ -71,13 +73,30 @@ const TicketForm = () => {
                     }}
                     className="w-[1px] h-full rounded-full"
                 ></div>
-                <div class="basis-1/2 flex flex-col ">
-                    <div style={{
-                        backgroundColor: "#434343"
-                    }} className="flex bg-gray-300 rounded-tr-sm w-full h-[40px] place-content-center"><label style={{
-                        color: "#F9F9F9"
-                    }} className="my-2 description">Your Tickets</label></div>
-                </div>
+                <div className="basis-1/2 flex flex-col">
+  <div style={{
+    backgroundColor: "#434343"
+  }} className="flex bg-gray-300 rounded-tr-sm w-full h-[40px] place-content-center">
+    <label style={{
+      color: "#F9F9F9"
+    }} className="my-2 description">Your Tickets</label>
+  </div>
+  <div className="w-[35em] mx-auto bg-white flex flex-row items-center justify-start mt-20">
+  <img src={ticketImage} alt="Ticket" className="h-[9.5em]" />
+  <div className="w-[18em] h-[10em] ml-4  rounded-r-lg">
+    <div className="font-mono text-sm  mt-4">For 17 yr old</div>
+    <h1 className="font-bold text-xl font-mono">saturday half marathon</h1>
+    <div className="font-mono">Distance: 21.10 km</div>
+    <div>12 EUR</div>
+    <div>SEP.12.2025 10:00AM</div>
+  </div>
+  <div className="w-[10.5em] h-[7.5em] border-2 border-black border-dashed border-t-0 border-b-0 border-r-0 ml-4">
+  <img src={QR} alt="Ticket" className="h-[3em] ml-2 mt-2" />
+  <div className="font-extrabold  ml-6 mt-2">X</div>
+  <div className="font-reenie ml-2 ">Hyrcania</div>
+  </div>
+</div>
+</div>
 
 
             </div>
