@@ -7,3 +7,56 @@
   }
 }
 
+
+.header {
+  color: #333533;;
+  font-style: normal;
+  font-weight: 800;
+  font-family: 'Noto Sans', sans-serif;
+}
+.event-description{
+  color:#797979;
+  font-size:medium;
+  font-style: normal;
+  font-weight: 500;
+  font-family:'Noto Sans', sans-serif;
+
+}
+.marathon-detail-card{
+  color:#333533;
+  font-size:smaller;
+  font-style: normal;
+  font-weight: 600;
+  font-family:'Noto Sans', sans-serif;
+
+}
+.event-title{
+  color: #333533;;
+  font-style: normal;
+  font-weight: 800;
+  font-family: 'Noto Sans', sans-serif;
+  font-size:xx-large;
+
+}
+.form-label{
+  color: #333533;;
+  font-style: normal;
+  font-weight: 700;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.description{
+  color:#797979;
+  font-size:smaller;
+  font-style: normal;
+  font-weight: 500;
+  font-family:'Noto Sans', sans-serif;
+}
+.toggle-option{
+  color: #333533;;
+  font-style: normal;
+  font-weight: 400;
+  font-family: 'Noto Sans', sans-serif;
+  
+}
+
