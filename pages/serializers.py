@@ -20,7 +20,7 @@ class TicketSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         if request:
             return request.build_absolute_uri(reverse('ticket-signups-list', args=[obj.pk]))
-        return reverse('ticket-signups-list', args=[obj.pk])
+        return reverse('ticket-signups-list', args=[obj.pk])        
         
    
 class EventSerializer(serializers.ModelSerializer):
