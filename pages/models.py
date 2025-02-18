@@ -56,8 +56,8 @@ class Event(models.Model):
         return (f"{self.title}")
     
 
-class TeamMember(models.Model):
-    event = models.Man
+# class TeamMember(models.Model):
+#     event = models.models
 class Ticket(models.Model):
     title = models.CharField(max_length=225)
     event = models.ForeignKey(Event,on_delete=models.PROTECT,related_name='tickets')

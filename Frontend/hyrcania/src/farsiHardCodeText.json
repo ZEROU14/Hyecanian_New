@@ -1,0 +1,116 @@
+{
+    "name": "هیرکانی",
+    "navbar": "",
+    "home": {
+      "title": "سریع بدوید، آزاد بدوید",
+      "subtitle": "مسابقات را کشف کنید"
+    },
+    "eventCreation": {
+      "title": "ایجاد رویداد",
+      "description": "فرم زیر را با تمام جزئیات پر کنید تا رویداد خود را به زندگی بیاورید.",
+      "buttons": {
+        "eventDetail": "جزئیات رویداد",
+        "routeDetail": "جزئیات مسیر",
+        "marathonCategory": "دسته بندی ماراتن",
+        "tickets": "بلیط‌ها"
+      }
+    },
+    "dashboard": {
+      "brandName": "هیرکانیا",
+      "userGreeting": "سلام کاربر",
+      "sidebar": {
+        "overview": "نمای کلی",
+        "participants": "شرکت‌کنندگان"
+      }
+    },
+    "eventDetail": {
+      "title": "جزئیات رویداد",
+      "nextButton": "بعدی",
+      "form": {
+        "eventName": {
+          "label": "نام رویداد",
+          "placeholder": "نام رویداد",
+          "description": "نام رویداد خود را وارد کنید"
+        },
+        "description": {
+          "label": "توضیحات",
+          "placeholder": "اطلاعات رویداد",
+          "description": "توضیح مختصری در مورد رویداد خود ارائه دهید."
+        },
+        "schedule": {
+          "title": "برنامه",
+          "location": {
+            "label": "مکان",
+            "placeholder": "مکان",
+            "description": "مکان رویداد خود را وارد کنید."
+          },
+          "startingDay": {
+            "label": "روز شروع"
+          },
+          "endingDay": {
+            "label": "روز پایان"
+          }
+        }
+      }
+    },
+    "Overview": {
+      "totalParticipants": {
+        "value": "۱۲۳",
+        "label": "تعداد کل شرکت‌کنندگان"
+      },
+      "totalRevenue": {
+        "value": "۱۲۰،۰۰۰ INR",
+        "label": "کل درآمد"
+      }
+    },
+    "Routes": {
+      "header": {
+        "title": "مسیرها",
+        "description": "دسته بندی مسابقه برای رویداد خود را انتخاب کنید."
+      },
+      "form": {
+        "startingPoint": "نقطه شروع",
+        "endingPoint": "نقطه پایان",
+        "loopedCourse": "شروع و پایان در یک مکان (مسیر حلقه ای)"
+      },
+      "buttons": {
+        "next": "بعدی"
+      }
+    },
+    "TicketForm": {
+      "header": {
+        "title": "بلیط برای رویداد",
+        "buttonNext": "بعدی"
+      },
+      "form": {
+        "raceName": {
+          "label": "نام مسابقه",
+          "description": "نام مسابقه خود را وارد کنید مثال. نیمه ماراتن رقابتی",
+          "placeholder": "نام مسابقه"
+        },
+        "distance": {
+          "label": "مسافت (به کیلومتر)",
+          "description": "کل مسافت مسابقه را وارد کنید",
+          "placeholder": "نام مسابقه"
+        },
+        "otpDistance": {
+          "label": "مسافت (به کیلومتر)",
+          "description": "کل مسافت مسابقه را وارد کنید",
+          "unit": "کیلومتر"
+        },
+        "startTime": {
+          "label": "زمان شروع محلی",
+          "description": "زمان شروع محلی مسابقه خود را مشخص کنید",
+          "placeholder": "انتخاب تاریخ"
+        },
+        "price": {
+          "label": "قیمت",
+          "description": "هزینه ورودی رویداد را مشخص کنید، از جمله ارز، تا شرکت‌کنندگان از هزینه ثبت نام مطلع شوند.",
+          "placeholder": "قیمت بلیط"
+        }
+      }
+    },
+    "Participants": {
+      "title": "شرکت‌کنندگان"
+    }
+}
