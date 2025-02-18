@@ -8,16 +8,16 @@ const Home = () => {
       style={{
         background: "#F6F5F2",
       }}
-      data-oid=".q5roy:"
+      data-oid="_444160"
     >
-      <Header data-oid="db3nd9." />
+      <Header data-oid="kp0q3jr" />
 
-      <div className="flex flex-col items-center   " data-oid="_r9t7q5">
+      <div className="flex flex-col items-center   " data-oid="-hf6mfu">
         <div
           className="flex flex-row self-start space-x-4 ml-20 pl-6 mt-6 "
-          data-oid="tw1r:xy"
+          data-oid="64oggzd"
         >
-          <DiscoveryIcon data-oid="vj35eca" />
+          <DiscoveryIcon data-oid="0ordo.3" />
           <h1
             className=" text-left text-3xl text-black-800 "
             style={{
@@ -26,7 +26,7 @@ const Home = () => {
               fontWeight: "700",
               fontFamily: "'Noto Sans', sans-serif",
             }}
-            data-oid=":kx81ea"
+            data-oid="ws:.2-z"
           >
             Discover Events
           </h1>
@@ -34,14 +34,14 @@ const Home = () => {
 
         <div
           className="grid grid-cols-1   sm:grid-cols-2 lg:grid-cols-3 "
-          data-oid=":c37t_8"
+          data-oid="-_k11_."
         >
-          <EventCard data-oid="tft.1qg" />
-          <EventCard data-oid="3w9dr4x" />
-          <EventCard data-oid="mwm77th" />
-          <EventCard data-oid="td.x5qx" />
-          <EventCard data-oid=":j-gayu" />
-          <EventCard data-oid="d4d986t" />
+          <EventCard data-oid=".:_8mc:" />
+          <EventCard data-oid="u.y2m0:" />
+          <EventCard data-oid="hwl9:0b" />
+          <EventCard data-oid="y.vdz87" />
+          <EventCard data-oid="o4exsff" />
+          <EventCard data-oid=":s4:v0u" />
         </div>
       </div>
     </div>

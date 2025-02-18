@@ -1,0 +1,118 @@
+{
+  "name": "Hyrcania",
+  "navbar": "",
+  "home": {
+    "title": "Run fast, run Free",
+    "subtitle": "Discover Events"
+  },
+  "eventCreation": {
+    "title": "Event Creation",
+    "description": "Fill out the form below with all the details to bring your event to life.",
+    "buttons": {
+      "eventDetail": "Event Detail",
+      "routeDetail": "Route detail",
+      "marathonCategory": "Marathon Category",
+      "tickets": "Tickets"
+    }
+  },
+  "dashboard": {
+    "brandName": "Hyrcania",
+    "userGreeting": "Hi user",
+    "sidebar": {
+      "overview": "Overview",
+      "participants": "Participants"
+    }
+  },
+  "eventDetail": {
+    "title": "Event Detail",
+    "nextButton": "Next",
+    "form": {
+      "eventName": {
+        "label": "Event Name",
+        "placeholder": "Event Name",
+        "description": "Enter your event name"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Event Information.",
+        "description": "Provide a brief description of your event."
+      },
+      "schedule": {
+        "title": "Schedule",
+        "location": {
+          "label": "Location",
+          "placeholder": "Location",
+          "description": "Enter the location of your event."
+        },
+        "startingDay": {
+          "label": "Starting Day"
+        },
+        "endingDay": {
+          "label": "Ending Day"
+        }
+      }
+    }
+  },
+  "Overview": {
+    "totalParticipants": {
+      "value": "123",
+      "label": "Total Participants"
+    },
+    "totalRevenue": {
+      "value": "1,20,000 INR",
+      "label": "Total Revenue"
+    }
+  },
+
+  "Routes": {
+    "header": {
+      "title": "Routes",
+      "description": "Select the race category for your event."
+    },
+    "form": {
+      "startingPoint": "Starting Point",
+      "endingPoint": "Ending Point",
+      "loopedCourse": "Start and end at the same location (looped course)"
+    },
+    "buttons": {
+      "next": "Next"
+    }
+  },
+
+  "TicketForm": {
+    "header": {
+      "title": "Ticket for Event",
+      "buttonNext": "Next"
+    },
+    "form": {
+      "raceName": {
+        "label": "Race Name",
+        "description": "Give your race name Ex. Half marathon competitive",
+        "placeholder": "race name"
+      },
+      "distance": {
+        "label": "Distance (in Km)",
+        "description": "Enter the total distance of the race",
+        "placeholder": "race name"
+      },
+      "otpDistance": {
+        "label": "Distance (in Km)",
+        "description": "Enter the total distance of the race",
+        "unit": "km"
+      },
+      "startTime": {
+        "label": "Local Starting Time",
+        "description": "Specify the local start time for your race",
+        "placeholder": "pick date"
+      },
+      "price": {
+        "label": "Price",
+        "description": "Specify the entry fee for the event, including the currency, so participants know the cost of registration.",
+        "placeholder": "ticket price"
+      }
+    }
+  },
+  "Participants": {
+    "title": "Participants"
+  }
+}

@@ -64,7 +64,7 @@ function Article({ article, index }) {
   return (
     <section
       className={`relative w-full h-64 overflow-hidden shadow group bg-gradient-to-r ${gradientClass} z-50 transition-all duration-300 hover:scale-[1.02]`}
-      data-oid="qc8eb6t"
+      data-oid="qnfhvim"
     >
       {/* Image background with reduced opacity */}
       <div
@@ -72,20 +72,20 @@ function Article({ article, index }) {
         style={{
           backgroundImage: `url('${article.image}')`,
         }}
-        data-oid="3x6kbht"
+        data-oid="5.9.zoy"
       />
 
       {/* Rest of the component remains the same... */}
       <div
         className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-50 z-10"
-        data-oid=":1s9ukg"
+        data-oid="we4z3mp"
       />
 
       <div
         className="relative z-20 p-5 text-white h-full flex flex-col"
-        data-oid="6r4lmqq"
+        data-oid="cos8zu9"
       >
-        <div className="flex justify-end" data-oid="_bu5y41">
+        <div className="flex justify-end" data-oid="j.fj5_e">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -93,22 +93,22 @@ function Article({ article, index }) {
             strokeWidth={1.5}
             stroke="currentColor"
             className="size-6 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-            data-oid="hymaow_"
+            data-oid="ljjajoc"
           >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
               d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-              data-oid="8-n2w34"
+              data-oid="h567ftz"
             />
           </svg>
         </div>
 
-        <div className="mt-auto" data-oid="4cgolv0">
-          <h1 className="text-lg font-bold mb-2" data-oid="g.9z.mz">
+        <div className="mt-auto" data-oid="j.-bskf">
+          <h1 className="text-lg font-bold mb-2" data-oid="sxqo0r.">
             {article.title}
           </h1>
-          <div className="flex items-center gap-2" data-oid="tpqmddg">
+          <div className="flex items-center gap-2" data-oid="67oie:c">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -116,23 +116,23 @@ function Article({ article, index }) {
               strokeWidth={1.5}
               stroke="currentColor"
               className="size-5"
-              data-oid=".p31n6h"
+              data-oid="h6mr-me"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                data-oid="j7:m_5k"
+                data-oid=".fgyow0"
               />
 
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
-                data-oid="ot3_bia"
+                data-oid="btfyy_u"
               />
             </svg>
-            <p className="text-sm leading-relaxed" data-oid="ax1d.s8">
+            <p className="text-sm leading-relaxed" data-oid="f-gc2eg">
               {article.description}
             </p>
           </div>

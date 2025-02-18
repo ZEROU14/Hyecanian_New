@@ -6,7 +6,7 @@ import Header from "./components/Header"; // Import Header
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter data-oid="zc99n6_">
-    <App data-oid="wrckuh8" /> {/* Main app content */}
+  <BrowserRouter data-oid="8l2lj5l">
+    <App  data-oid="90g1s5d" /> {/* Main app content */}
   </BrowserRouter>,
 );
