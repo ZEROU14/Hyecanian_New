@@ -8,7 +8,7 @@ import {
  
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import Ticket from "@/assets/Ticket";
+import Ticket from "@/assets/TicketCard";
 import ticketImage from "../images/ticket.jpeg";
 import QR from "../images/QR.png";
 
