@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'pages',
     'blogs',
     'core',
+    'payment'
     
 ]
 
@@ -184,3 +185,8 @@ DJOSER = {
 }
 
 AUTH_USER_MODEL = 'core.CustomUser'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # This backend supports permissions
+    # Include your custom authentication backend if you have one
+]

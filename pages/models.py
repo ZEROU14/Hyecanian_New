@@ -18,6 +18,11 @@ class Category(models.Model):
         return self.title
 
 
+class TeamMember(models.Model):
+    full_name = models.CharField(max_length=250)
+    position = models.CharField(max_length=250)
+    image = models.ImageField(upload_to='team_member')
+
 class Event(models.Model):
     GENDER_MALE = 'm'
     GENDER_FEMALE = 'f'
@@ -51,6 +56,7 @@ class Event(models.Model):
     road_profile_tag = models.ManyToManyField(Tags,related_name='road')
     road_surface = models.ManyToManyField(Tags,related_name='surface')
     other_tags = models.ManyToManyField(Tags,related_name='event')
+    team_member = models.ForeignKey(TeamMember,related_name='member',on_delete=models.CASCADE)
    
     def __str__(self):
         return (f"{self.title}")
@@ -88,6 +94,7 @@ class EventSignup(models.Model):
     relativ_name = models.CharField(max_length=255)
     relativ_last_name = models.CharField(max_length=255)
     relativ_phone_number = models.CharField(max_length=11)
+    is_paid = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('ticket', 'phone_number')

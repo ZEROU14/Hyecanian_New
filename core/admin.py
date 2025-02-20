@@ -1,16 +1,19 @@
 # accounts/admin.py
 
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import CustomUser
 
-class CustomUserAdmin(UserAdmin):
-    model = CustomUser
-    list_display = ['full_name','phone_number', 'is_staff', 'is_active']
-    list_filter = ['is_staff', 'is_active']
+class CustomUserAdmin(BaseUserAdmin):
+    ordering = ('phone_number',)
+    list_display = ('phone_number', 'full_name','is_staff')
+
+    search_fields = ('phone_number', 'full_name')
     fieldsets = (
         (None, {'fields': ('phone_number', 'password')}),
-        ('Permissions', {'fields': ('is_staff', 'is_active', 'groups', 'user_permissions')}),
+        ('Personal info', {'fields': ('full_name',)}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login',)}),
     )
     add_fieldsets = (
         (None, {
@@ -18,7 +21,5 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('phone_number', 'password1', 'password2', 'is_staff', 'is_active')}
         ),
     )
-    search_fields = ('phone_number',)
-    ordering = ('phone_number',)
 
 admin.site.register(CustomUser, CustomUserAdmin)

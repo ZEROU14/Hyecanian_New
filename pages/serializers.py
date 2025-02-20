@@ -49,6 +49,7 @@ class EventSerializer(serializers.ModelSerializer):
                   ,'road_profile_tag'
                   ,'road_surface'
                   ,'tickets'
+                  ,'team_member'
                   ]
     
 
@@ -67,9 +68,10 @@ class EventSignUpSerializer(serializers.ModelSerializer):
                   ,'relativ_name'
                   ,'relativ_last_name'
                   ,'relativ_phone_number'
-                  ,'singup_date']
+                  ,'singup_date'
+                  ]
 
-        read_only_fields = ['user','ticket']
+        read_only_fields = ['user','ticket','is_paid']
 
                         
 class CategorySeriaizer(serializers.ModelSerializer):

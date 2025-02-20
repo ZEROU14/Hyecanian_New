@@ -1,12 +1,12 @@
 from django.forms import ValidationError
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser,DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 import os
 from dotenv import load_dotenv
 load_dotenv()
 # from core import permissions
-from .permissions import ReadOnlyorAdmin,PostForUser
+from .permissions import ReadOnlyorAdmin,PostForUser,CustomDjangoModelPermission
 
 from kavenegar import *
 
@@ -34,7 +34,7 @@ class TagsViewSet(ModelViewSet):
 class EventViewSet(ModelViewSet):
     serializer_class = EventSerializer
     queryset = Event.objects.prefetch_related('tickets').all()
-    permission_classes =[ReadOnlyorAdmin]
+    permission_classes =[CustomDjangoModelPermission]
     
     def get_serializer_context(self):
         return {"request": self.request} 
@@ -42,7 +42,7 @@ class EventViewSet(ModelViewSet):
 class TicketViewSet(ModelViewSet):
     serializer_class = TicketSerializer
     queryset = Ticket.objects.all()
-    permission_classes = [IsAdminUser]
+    permission_classes = [CustomDjangoModelPermission]
     
 class EventSignupViewSet(ModelViewSet):
     serializer_class = EventSignUpSerializer
