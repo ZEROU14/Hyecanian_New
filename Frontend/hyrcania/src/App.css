@@ -7,12 +7,38 @@
   }
 }
 
-
+.nav-bar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #373737;
+  z-index: 1000;
+}
 .header {
   color: #333533;;
   font-style: normal;
   font-weight: 800;
+  
   font-family: 'Noto Sans', sans-serif;
+}
+.nav-header {
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 800;
+  font-size:x-large;
+  font-family: 'Noto Sans', sans-serif;
+}
+.nav-bar-text {
+  color: #AAAAAA;
+  font-style: normal;
+  font-weight: 600;
+  font-size:small;
+  font-family: 'Noto Sans', sans-serif;
+  transition: color 0.3s ease; /* Smooth transition effect */
+}
+
+.nav-bar-text:hover {
+  color: white;
 }
 .event-description{
   color:#797979;
