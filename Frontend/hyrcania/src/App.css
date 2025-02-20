@@ -6,13 +6,67 @@
     --radius: 0.5rem
   }
 }
-
-
+.footer {
+  position: relative; /* Ensures it stays at the bottom when content is short */
+  width: 100%;
+  height:100px;
+  z-index: 200;
+  background-color: #222; /* Dark background */
+}
+.footer-text{
+  color:#828282;
+  font-style: normal;
+  font-weight: 400;
+  font-size:medium;
+  font-family: 'Noto Sans', sans-serif;
+}
+.footer-text:hover{
+  color:#ffffff;
+  font-style: normal;
+  font-weight: 400;
+  font-size:medium;
+  font-family: 'Noto Sans', sans-serif;
+}
+.footer-header {
+  color: #373737;
+  
+  font-style: normal;
+  font-weight: 800;
+  font-size:x-large;
+  font-family: 'Noto Sans', sans-serif;
+}
+.nav-bar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #373737;
+  z-index: 1000;
+}
 .header {
   color: #333533;;
   font-style: normal;
   font-weight: 800;
+  
   font-family: 'Noto Sans', sans-serif;
+}
+.nav-header {
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 800;
+  font-size:x-large;
+  font-family: 'Noto Sans', sans-serif;
+}
+.nav-bar-text {
+  color: #AAAAAA;
+  font-style: normal;
+  font-weight: 600;
+  font-size:small;
+  font-family: 'Noto Sans', sans-serif;
+  transition: color 0.3s ease; /* Smooth transition effect */
+}
+
+.nav-bar-text:hover {
+  color: white;
 }
 .event-description{
   color:#797979;
@@ -23,6 +77,14 @@
 
 }
 .marathon-detail-card{
+  color:#333533;
+  font-size:smaller;
+  font-style: normal;
+  font-weight: 600;
+  font-family:'Noto Sans', sans-serif;
+
+}
+.marathon-detail-fac{
   color:#333533;
   font-size:smaller;
   font-style: normal;

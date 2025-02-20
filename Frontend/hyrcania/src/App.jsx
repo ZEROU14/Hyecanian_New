@@ -2,13 +2,17 @@ import React from "react";
 
 import "./App.css"; // Ensure Tailwind is set up
 
-import Home from "./Pages/Home";
-import EventCreation from "./Pages/EventCreation";
+
 import MarathonDetail from "./Pages/MarathonDetail";
-import Dashboard from "./Pages/Dashboard";
+import Navbar from "./components/Navbar";
+import EndSection from "./components/EndSection";
 
 function App() {
-  return <MarathonDetail/>;
+  return <div className="flex flex-col">
+    <Navbar></Navbar>
+    <MarathonDetail/>
+    <EndSection/>
+  </div>;
 }
 
 export default App;
