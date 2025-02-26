@@ -5,29 +5,30 @@ from rest_framework_nested import routers
 from rest_framework_nested.routers import NestedDefaultRouter
 from .views import *
 
-# router = routers.DefaultRouter()
-# # router.register('tickets', TicketViewSet, basename='tickets')
-# router.register('events', EventViewSet,basename='event')
-# router.register('ticket',TicketViewSet,basename='ticket')
-# router.register('categories',CategoryViewSet,basename='category')
 
-
-# # روت تو در تو برای ثبت‌نام‌ها
-# tickets_router = NestedDefaultRouter(router, 'tickets', lookup='ticket')
-# tickets_router.register('signups', EventSignupViewSet, basename='ticket-signups')
-
-# urlpatterns = router.urls + tickets_router.urls
 
 router = routers.DefaultRouter()
 router.register('tickets', TicketViewSet, basename='tickets')
 router.register('events', EventViewSet,basename='event')
 router.register('categories',CategoryViewSet,basename='category')
 router.register('tags',TagsViewSet,basename='tags')
+# router.register('teamMember',TeamMemberViewSet,basename='team')
 
 
+ticket_create = NestedDefaultRouter(router,'events' , lookup = 'event')
+ticket_create.register('ticket_create', TicketViewSet, basename='event_ticket')
 
-# روت تو در تو برای ثبت‌نام‌ها
+team_create = NestedDefaultRouter(router,'events' , lookup = 'event')
+team_create.register('team_create', TeamMemberViewSet, basename='event_team')
+
+
 tickets_router = NestedDefaultRouter(router, 'tickets', lookup='ticket',)
 tickets_router.register('signups', EventSignupViewSet, basename='ticket-signups')
 
-urlpatterns = router.urls + tickets_router.urls
+
+urlpatterns = [
+    path('', include(router.urls)),
+    path('', include(team_create.urls)),
+    path('', include(ticket_create.urls)),
+    path('', include(tickets_router.urls)),
+]

@@ -17,8 +17,8 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
-
 class TeamMember(models.Model):
+    event = models.ForeignKey("Event",on_delete=models.CASCADE,related_name='team')
     full_name = models.CharField(max_length=250)
     position = models.CharField(max_length=250)
     image = models.ImageField(upload_to='team_member')
@@ -56,14 +56,12 @@ class Event(models.Model):
     road_profile_tag = models.ManyToManyField(Tags,related_name='road')
     road_surface = models.ManyToManyField(Tags,related_name='surface')
     other_tags = models.ManyToManyField(Tags,related_name='event')
-    team_member = models.ForeignKey(TeamMember,related_name='member',on_delete=models.CASCADE)
+    max_runner = models.IntegerField()
+    
    
     def __str__(self):
         return (f"{self.title}")
-    
 
-# class TeamMember(models.Model):
-#     event = models.models
 class Ticket(models.Model):
     title = models.CharField(max_length=225)
     event = models.ForeignKey(Event,on_delete=models.PROTECT,related_name='tickets')
@@ -71,7 +69,6 @@ class Ticket(models.Model):
 
     def __str__(self):
         return (f"ticket for event {self.event} ")
-
 
 class EventSignup(models.Model):
     GENDER_MALE = 'm'

@@ -14,43 +14,85 @@ from .models import (
     Event,
     EventSignup,
     Category,
-    Ticket
+    Ticket,
+    TeamMember
 )
 from .serializers import (
     EventSerializer,
     EventSignUpSerializer,
     CategorySeriaizer,
     TicketSerializer,
-    TagsSerializer
+    TagsSerializer,
+    TeamMemberSerialzer
 )
 
+class TeamMemberViewSet(ModelViewSet):
+    serializer_class = TeamMemberSerialzer
+    queryset = TeamMember.objects.select_related('event').all()
+    permission_classes = [IsAdminUser]
+   
+    def get_queryset(self):
+        event_id = self.kwargs.get('event_pk')
+        if not event_id:
+            raise ValidationError({"error": "event_id not found in the request."})
+        
+        return TeamMember.objects.filter(event_id=event_id)
 
+    def perform_create(self, serializer):
+        event_id = self.kwargs.get('event_pk')
+        if not event_id:
+            raise ValidationError({"error": "event_id not found in the request."})
+        
+        try:
+            event = Event.objects.get(id=event_id)
+        except Event.DoesNotExist:
+            raise ValidationError({"error": "Event not found."})
 
+        serializer.save(event=event)
 class TagsViewSet(ModelViewSet):
     serializer_class = TagsSerializer
     queryset = Ticket.objects.all()
     permission_classes = [IsAdminUser]
-# Create your views here.
+
+
+
 class EventViewSet(ModelViewSet):
     serializer_class = EventSerializer
-    queryset = Event.objects.prefetch_related('tickets').all()
-    permission_classes =[CustomDjangoModelPermission]
+    queryset = Event.objects.select_related('category').prefetch_related('tickets', 'team', 'road_profile_tag', 'road_surface', 'other_tags').all()
+    permission_classes =[ReadOnlyorAdmin]
     
     def get_serializer_context(self):
         return {"request": self.request} 
 
+
+
 class TicketViewSet(ModelViewSet):
     serializer_class = TicketSerializer
     queryset = Ticket.objects.all()
-    permission_classes = [CustomDjangoModelPermission]
-    
+    permission_classes = [IsAdminUser]
+   
+    def get_queryset(self):
+        event_id = self.kwargs.get('event_pk')
+        if event_id:
+            return Ticket.objects.filter(event_id=event_id)
+        return super().get_queryset()
+
+    def perform_create(self, serializer):
+        event_id = self.kwargs.get('event_pk')
+        if not event_id:
+            raise ValidationError({"error": "event_id not found in the request."})
+        
+        try:
+            event = Event.objects.get(id=event_id)
+        except Event.DoesNotExist:
+            raise ValidationError({"error": "Event not found."})
+
+        serializer.save(event=event)
 class EventSignupViewSet(ModelViewSet):
     serializer_class = EventSignUpSerializer
-    queryset = EventSignup.objects.all()
+    queryset = EventSignup.objects.select_related('ticket','user').all()
     permission_classes = [PostForUser]
 
-    
-    
     def list(self, request, *args, **kwargs):
         if not request.user.is_staff:
             return Response({"detail": "Not allowed."},)
@@ -63,9 +105,6 @@ class EventSignupViewSet(ModelViewSet):
     def perform_create(self, serializer):
         ticket_id = self.kwargs['ticket_pk']
         user_id = self.request.user.id
-
-
-
         already_signedup = EventSignup.objects.filter(ticket_id=ticket_id,user_id=user_id).first()
         if already_signedup:
             raise ValidationError({"detail": "You have already signed up for this ticket."})
@@ -110,8 +149,7 @@ class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySeriaizer
     queryset = Category.objects.all()
     permission_classes = [IsAdminUser]
-    
-  
+
     def get_serializer_context(self):
         return {"request": self.request} 
     

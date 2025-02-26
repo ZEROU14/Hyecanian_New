@@ -97,7 +97,12 @@ TEMPLATES = [
     },
 ]
 
-
+# PAYMENT = {
+#     'ZARINPAL_MERCHANT_ID': 'your_merchant_id_here',  # Replace with your actual merchant ID
+#     'ZARINPAL_DESCRIPTION': 'Purchase Ticket',  # Description for the payment
+#     'ZARINPAL_CALLBACK_URL': 'http://127.0.0.1:8000/',  # Update with your actual domain and callback path
+#     'ZARINPAL_SANDBOX': True,  # Set to False for production
+# }
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -173,7 +178,7 @@ REST_FRAMEWORK = {
 }
 from datetime import timedelta
 SIMPLE_JWT = {
-    "AUTH_HEADER_TYPES":('JWT',),
+    # "AUTH_HEADER_TYPES":('JWT',),
     "ACCESS_TOKEN_LIFETIME" : timedelta(days=1),
 }
 DJOSER = {
