@@ -80,7 +80,7 @@ const Dashboard = () => {
               },
               {
                 key: "2",
-                href: "#anchor-demo-static",
+                href: {Parcipants},
                 title: "Participants",
               },
              

@@ -19,7 +19,7 @@ import {
         <div className="flex flex-row gap-x-14">
           <h1 className="nav-bar-text">HOME</h1>
           <h1 className="nav-bar-text">CATEGORIES</h1>
-          <h1 className="nav-bar-text">DASHBOARD</h1>
+          <a href="./dashboard"><h1 className="nav-bar-text">DASHBOARD</h1></a>
           <h1 className="nav-bar-text">ABOUT US</h1>
           <h1 className="nav-bar-text">CONTACT US</h1>
         </div>
