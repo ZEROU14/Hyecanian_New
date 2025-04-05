@@ -42,6 +42,16 @@ class TeamMemberSerialzer(serializers.ModelSerializer):
             ,"image"
         ]
         read_only_fields = ['id','event']
+
+class SponserSerialzer(serializers.ModelSerializer):
+    class Meta:
+        model = TeamMember
+        fields = [
+            "social_link"
+            ,"name"
+            ,"description"
+        ]
+        read_only_fields = ['id','event']
         
     
 class EventSerializer(serializers.ModelSerializer):
@@ -62,6 +72,7 @@ class EventSerializer(serializers.ModelSerializer):
                   'title',
                   'description',
                   'datetime_created'
+                  ,'event_date'
                   ,'banner_image'
                   ,'route_image'
                   ,'category'
@@ -76,7 +87,7 @@ class EventSerializer(serializers.ModelSerializer):
     
 
 class EventSignUpSerializer(serializers.ModelSerializer):
-    ticket = TicketSerializer()
+    # ticket = TicketSerializer()
     class Meta:
         model = EventSignup
         fields = [
@@ -87,8 +98,8 @@ class EventSignUpSerializer(serializers.ModelSerializer):
                   'incurace_pic',
                   'id_pic',
                   'state',
-                  'ticket'
-                  ,'relativ_name'
+                  'T_Shirt_size',
+                  'relativ_name'
                   ,'relativ_last_name'
                   ,'relativ_phone_number'
                   ,'singup_date'

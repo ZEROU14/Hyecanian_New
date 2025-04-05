@@ -6,12 +6,12 @@ from .models import CustomUser
 
 class CustomUserAdmin(BaseUserAdmin):
     ordering = ('phone_number',)
-    list_display = ('phone_number', 'full_name','is_staff')
+    list_display = ('phone_number','is_staff')
 
-    search_fields = ('phone_number', 'full_name')
+
     fieldsets = (
         (None, {'fields': ('phone_number', 'password')}),
-        ('Personal info', {'fields': ('full_name',)}),
+     
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login',)}),
     )

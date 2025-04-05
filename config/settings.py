@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'debug_toolbar',
     'taggit',
@@ -101,13 +102,29 @@ TEMPLATES = [
     },
 ]
 
-# PAYMENT = {
-#     'ZARINPAL_MERCHANT_ID': 'your_merchant_id_here',  # Replace with your actual merchant ID
-#     'ZARINPAL_DESCRIPTION': 'Purchase Ticket',  # Description for the payment
-#     'ZARINPAL_CALLBACK_URL': 'http://127.0.0.1:8000/',  # Update with your actual domain and callback path
-#     'ZARINPAL_SANDBOX': True,  # Set to False for production
-# }
+KAVEH_NEGAR = {
+    'API_KEY': '494E6132435A784238794D7676344A617161774C3565636248465243416931545A374E61314A446A4C79513D',
+    'API_URL': 'https://api.kavenegar.com/v1/{api_key}/verify/lookup.json',
+}
+PAYMENT = {
+    'ZARINPAL_MERCHANT_ID': 'asfhashfokhjlkhjiuh',
+    'ZARINPAL_DESCRIPTION': 'reQESUT FOR TICKET ',
+    'ZARINPAL_CALLBACK_URL': '127.0.0.1:8000/',
+    'ZARINPAL_SANDBOX': False,  # Set to True for sandbox, False for production
+}
 
+ZARINPAL_URLS = {
+    'SANDBOX': {
+        'REQUEST_URL': 'https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentRequest.json',
+        'VERIFY_URL': 'https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentVerification.json',
+        'STARTPAY_URL': 'https://sandbox.zarinpal.com/pg/StartPay/',
+    },
+    'PRODUCTION': {
+        'REQUEST_URL': 'https://api.zarinpal.com/pg/v4/payment/request.json',
+        'VERIFY_URL': 'https://api.zarinpal.com/pg/v4/payment/verify.json',
+        'STARTPAY_URL': 'https://www.zarinpal.com/pg/StartPay/',
+    }
+}
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
@@ -182,10 +199,10 @@ REST_FRAMEWORK = {
 }
 from datetime import timedelta
 SIMPLE_JWT = {
-    # "AUTH_HEADER_TYPES":('JWT',),
-    "ACCESS_TOKEN_LIFETIME" : timedelta(days=1),
+    "AUTH_HEADER_TYPES":('JWT',),
+    "ACCESS_TOKEN_LIFETIME" : timedelta(days=30),
 }
-DJOSER = {
+SER = {
     'SERIALIZERS':{
         'user_create' : 'core.serializers.CustomUserCreateSerializer',
         'current_user' : 'core.serializers.CustomUserSerializer',
@@ -199,3 +216,11 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # This backend supports permissions
     # Include your custom authentication backend if you have one
 ]
+
+KAVE_NEGAR_API_KEY_OTP = '4452524758666D616C4E6F79324A636466784A6A496C355A50565555392B65306F2B38354F595755384A733D'
+
+
+# Session settings
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = False  # Set to True in production

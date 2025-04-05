@@ -1,5 +1,8 @@
-from django.urls import path,include
-from . import views
+from django.urls import path
+from .views import GenerateOTPView, VerifyOTPView, CustomUserViewSet
+
 urlpatterns = [
-    path('me/',views.CustomUserViewSet.as_view({'get':'retrieve'})),
+    path('generate-otp/', GenerateOTPView.as_view(), name='generate-otp'),
+    path('verify-otp/', VerifyOTPView.as_view(), name='verify-otp'),
+    path('user/', CustomUserViewSet.as_view(), name='user-profile'),
 ]

@@ -1,3 +1,5 @@
+import datetime
+from urllib import request
 from django.forms import ValidationError
 from rest_framework.permissions import IsAdminUser,DjangoModelPermissions
 from rest_framework.response import Response
@@ -15,7 +17,8 @@ from .models import (
     EventSignup,
     Category,
     Ticket,
-    TeamMember
+    TeamMember,
+    Sponsor
 )
 from .serializers import (
     EventSerializer,
@@ -23,7 +26,8 @@ from .serializers import (
     CategorySeriaizer,
     TicketSerializer,
     TagsSerializer,
-    TeamMemberSerialzer
+    TeamMemberSerialzer,
+    SponserSerialzer
 )
 
 class TeamMemberViewSet(ModelViewSet):
@@ -54,8 +58,30 @@ class TagsViewSet(ModelViewSet):
     queryset = Ticket.objects.all()
     permission_classes = [IsAdminUser]
 
+class SponserViewSet(ModelViewSet):
+    serializer_class = SponserSerialzer
+    queryset = Sponsor.objects.select_related('event').all()
+    permission_classes=[IsAdminUser]
 
+   
+    def get_queryset(self):
+        event_id = self.kwargs.get('event_pk')
+        if not event_id:
+            raise ValidationError({"error": "event_id not found in the request."})
+        
+        return TeamMember.objects.filter(event_id=event_id)
 
+    def perform_create(self, serializer):
+        event_id = self.kwargs.get('event_pk')
+        if not event_id:
+            raise ValidationError({"error": "event_id not found in the request."})
+        
+        try:
+            event = Event.objects.get(id=event_id)
+        except Event.DoesNotExist:
+            raise ValidationError({"error": "Event not found."})
+
+        serializer.save(event=event)
 class EventViewSet(ModelViewSet):
     serializer_class = EventSerializer
     queryset = Event.objects.select_related('category').prefetch_related('tickets', 'team', 'road_profile_tag', 'road_surface', 'other_tags').all()
@@ -64,12 +90,10 @@ class EventViewSet(ModelViewSet):
     def get_serializer_context(self):
         return {"request": self.request} 
 
-
-
 class TicketViewSet(ModelViewSet):
     serializer_class = TicketSerializer
     queryset = Ticket.objects.all()
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
    
     def get_queryset(self):
         event_id = self.kwargs.get('event_pk')

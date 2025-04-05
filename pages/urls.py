@@ -18,6 +18,9 @@ router.register('tags',TagsViewSet,basename='tags')
 ticket_create = NestedDefaultRouter(router,'events' , lookup = 'event')
 ticket_create.register('ticket_create', TicketViewSet, basename='event_ticket')
 
+sponser_create = NestedDefaultRouter(router,'events' , lookup = 'event')
+sponser_create.register('sponser_create', SponserViewSet, basename='event_ticket')
+
 team_create = NestedDefaultRouter(router,'events' , lookup = 'event')
 team_create.register('team_create', TeamMemberViewSet, basename='event_team')
 
@@ -31,4 +34,5 @@ urlpatterns = [
     path('', include(team_create.urls)),
     path('', include(ticket_create.urls)),
     path('', include(tickets_router.urls)),
+    path('', include(sponser_create.urls))
 ]

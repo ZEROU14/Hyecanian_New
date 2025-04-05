@@ -44,7 +44,7 @@ class Event(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     datetime_created = models.DateTimeField(auto_now_add=True)
-    event_data = models.DateField(auto_now=True)
+    event_date = models.DateField(null=True,blank=True)
     banner_image = models.ImageField(upload_to='event')
     route_image = models.ImageField(upload_to='event')
     category = models.ForeignKey(Category,on_delete=models.PROTECT,related_name='category')
@@ -70,7 +70,26 @@ class Ticket(models.Model):
     def __str__(self):
         return (f"ticket for event {self.event} ")
 
+
+class Sponsor(models.Model):
+    event = models.ForeignKey(Event,on_delete=models.CASCADE,related_name='sponsers')
+    social_link = models.URLField()
+    name = models.CharField(max_length=150)
+    description = models.CharField(max_length=600)
+    
 class EventSignup(models.Model):
+    T_SHIRT_SIZE_S = 's'
+    T_SHIRT_SIZE_M = 'm'
+    T_SHIRT_SIZE_L = 'l'
+    T_SHIRT_SIZE_XL = 'xl'
+    T_SHIRT_SIZE_2XL = "2xl"
+    T_SHIRT_OPTION = [
+        (T_SHIRT_SIZE_S,'Small'),
+        (T_SHIRT_SIZE_M,'Medium' ),
+        (T_SHIRT_SIZE_L ,'Large'),
+        (T_SHIRT_SIZE_XL , 'X Large'),
+        (T_SHIRT_SIZE_2XL , '2X Large') ,
+    ]
     GENDER_MALE = 'm'
     GENDER_FEMALE = 'f'
     GENDER_OPTIONS =[
@@ -88,10 +107,12 @@ class EventSignup(models.Model):
     incurace_pic = models.ImageField(upload_to='event_signup_incurance')
     id_pic = models.ImageField(upload_to='event_signup_id_pic')
     state = models.CharField(max_length=255,)
+    T_Shirt_size = models.CharField(max_length=10,choices=T_SHIRT_OPTION)
     relativ_name = models.CharField(max_length=255)
     relativ_last_name = models.CharField(max_length=255)
     relativ_phone_number = models.CharField(max_length=11)
     is_paid = models.BooleanField(default=False)
+
 
     class Meta:
         unique_together = ('ticket', 'phone_number')
