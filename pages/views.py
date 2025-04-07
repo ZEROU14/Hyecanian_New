@@ -10,7 +10,6 @@ load_dotenv()
 # from core import permissions
 from .permissions import ReadOnlyorAdmin,PostForUser,CustomDjangoModelPermission
 
-from kavenegar import *
 
 from .models import (
     Event,
@@ -142,7 +141,7 @@ class EventSignupViewSet(ModelViewSet):
         if self.validate_user_info(phone_number):
             # Send SMS
             # event_name = serializer.validated_data['event_name']
-            self.send_sms(phone_number, f'Thank you for signing up for ticket : {ticket} !')
+            # self.send_sms(phone_number, f'Thank you for signing up for ticket : {ticket} !')
             # Save the information
             serializer.save(ticket=ticket, user_id=user_id)
         else:
@@ -154,21 +153,7 @@ class EventSignupViewSet(ModelViewSet):
             return True
         return False
 
-    def send_sms(self, phone_number, message):
-
-        api = KavenegarAPI(os.getenv("SMS_API_KEY"))
-        try:
-            params = {
-                'sender': '2000660110',
-                'receptor': phone_number,
-                'message': message,
-            }
-            response = api.sms_send(params)
-        except APIException as e:
-            print(e)
-        except HTTPException as e:
-            print(e)
-
+ 
 class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySeriaizer
     queryset = Category.objects.all()

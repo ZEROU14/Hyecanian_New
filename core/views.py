@@ -16,10 +16,10 @@ User = get_user_model()
 class CustomUserViewSet(APIView):
     permission_classes = [IsAuthenticated]
 
+    
     def get(self, request, *args, **kwargs):
-        serializer = CustomUserSerializer(request.user)
+        serializer = CustomUserSerializer(request.user, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
-
 class VerifyOTPView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = OTPVerifySerializer(data=request.data)

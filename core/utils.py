@@ -12,12 +12,12 @@ def generate_otp(length=6):
 
 def send_otp_via_kave_negar(phone_number, otp):
     api_key = settings.KAVEH_NEGAR['API_KEY']
-    api_url = f"https://api.kavenegar.com/v1/{api_key}/sms/send.json"
+    api_url = f"https://api.kavenegar.com/v1/{api_key}/verify/lookup.json"
 
     data = {
         'receptor': phone_number,
-        'message': f'Your OTP code is {otp}',
-        'sender': '2000660110'
+        'template': 'otp',  # Use your template name here
+        'token': otp,  # Use the generated OTP
     }
 
     headers = {

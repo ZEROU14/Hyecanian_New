@@ -60,7 +60,7 @@ class Event(models.Model):
     
    
     def __str__(self):
-        return (f"{self.title}")
+        return (f"with id : {self.id}, with title {self.title}")
 
 class Ticket(models.Model):
     title = models.CharField(max_length=225)
@@ -68,7 +68,7 @@ class Ticket(models.Model):
     price = models.IntegerField()
 
     def __str__(self):
-        return (f"ticket for event {self.event} ")
+        return (f"ticket for event {self.event}")
 
 
 class Sponsor(models.Model):
@@ -104,8 +104,7 @@ class EventSignup(models.Model):
     singup_date = models.DateTimeField(auto_now_add=True)
     phone_number = models.CharField(max_length=11)
     gender = models.CharField(max_length=1,choices=GENDER_OPTIONS)
-    incurace_pic = models.ImageField(upload_to='event_signup_incurance')
-    id_pic = models.ImageField(upload_to='event_signup_id_pic')
+    id_number = models.CharField(max_length=12)
     state = models.CharField(max_length=255,)
     T_Shirt_size = models.CharField(max_length=10,choices=T_SHIRT_OPTION)
     relativ_name = models.CharField(max_length=255)
@@ -119,4 +118,4 @@ class EventSignup(models.Model):
      
   
     def __str__(self):
-        return (f"Sign up for Ticket:  {self.ticket}  for user {self.user} " )
+        return (f"with id {self.id}  Sign up for Ticket:  {self.ticket}  for user {self.user} " )

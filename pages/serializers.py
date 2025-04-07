@@ -88,15 +88,17 @@ class EventSerializer(serializers.ModelSerializer):
 
 class EventSignUpSerializer(serializers.ModelSerializer):
     # ticket = TicketSerializer()
+  
+  # id_pic = serializers.ImageField(required=True)
     class Meta:
         model = EventSignup
         fields = [
+                  "id",
                   'first_name',
                   'last_name','age',
                   'phone_number',
                   'gender',
-                  'incurace_pic',
-                  'id_pic',
+                  'id_number',
                   'state',
                   'T_Shirt_size',
                   'relativ_name'

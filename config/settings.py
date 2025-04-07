@@ -101,9 +101,11 @@ TEMPLATES = [
         },
     },
 ]
+from decouple import config, Csv
+
 
 KAVEH_NEGAR = {
-    'API_KEY': '494E6132435A784238794D7676344A617161774C3565636248465243416931545A374E61314A446A4C79513D',
+    'API_KEY': config('SMS_API_KEY_OTP'),
     'API_URL': 'https://api.kavenegar.com/v1/{api_key}/verify/lookup.json',
 }
 PAYMENT = {
@@ -217,7 +219,6 @@ AUTHENTICATION_BACKENDS = [
     # Include your custom authentication backend if you have one
 ]
 
-KAVE_NEGAR_API_KEY_OTP = '4452524758666D616C4E6F79324A636466784A6A496C355A50565555392B65306F2B38354F595755384A733D'
 
 
 # Session settings
