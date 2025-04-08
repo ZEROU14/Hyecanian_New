@@ -30,6 +30,7 @@ class CustomUserSerializer(DjoserSerializer):
         successful_payments = obj.payments.filter(is_paid=True).values('ref_id', 'ticket__title')
         return [{'ref_id': payment['ref_id'], 'ticket_name': payment['ticket__title']} for payment in successful_payments]
 
+
 class OTPRequestSerializer(serializers.Serializer):
     phone_number = serializers.CharField()
 

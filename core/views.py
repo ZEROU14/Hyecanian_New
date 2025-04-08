@@ -1,3 +1,6 @@
+import re
+from django.forms import ValidationError
+from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -19,6 +22,8 @@ class CustomUserViewSet(APIView):
     def get(self, request, *args, **kwargs):
         serializer = CustomUserSerializer(request.user, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
 class VerifyOTPView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = OTPVerifySerializer(data=request.data)
@@ -51,13 +56,19 @@ class VerifyOTPView(APIView):
         logger.info(f"OTP verified successfully for phone number: {phone_number}")
         return Response({"access_token": access_token, "refresh_token": refresh_token}, status=status.HTTP_200_OK)
 
+
+def validate_iran_phone_number(value):
+    pattern = re.compile(r'^09\d{9}$')
+    if not pattern.match(value):
+        raise ValidationError(f'{value} is not a valid Iranian phone number. It should start with 09 and have 11 digits.') 
 class GenerateOTPView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = OTPRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         phone_number = serializer.validated_data['phone_number']
-
+        phone_number = validate_iran_phone_number(phone_number)
+       
         otp = generate_otp()
         cache.set(phone_number, otp, timeout=300)  # Cache OTP for 5 minutes
 
