@@ -1,5 +1,7 @@
+import re
 from django.db import models
 from django.conf import settings
+from django.forms import ValidationError
 
 # Create your models here.
     
@@ -77,7 +79,11 @@ class Sponsor(models.Model):
     social_link = models.URLField()
     name = models.CharField(max_length=150)
     description = models.CharField(max_length=600)
-    
+
+def validate_iran_phone_number(value):
+    pattern = re.compile(r'^09\d{9}$')
+    if not pattern.match(value):
+        raise ValidationError(f'{value} is not a valid Iranian phone number. It should start with 09 and have 11 digits.') 
 class EventSignup(models.Model):
     T_SHIRT_SIZE_S = 's'
     T_SHIRT_SIZE_M = 'm'
@@ -103,14 +109,14 @@ class EventSignup(models.Model):
     last_name = models.CharField(max_length=255)
     age = models.DateField()
     singup_date = models.DateTimeField(auto_now_add=True)
-    phone_number = models.CharField(max_length=11)
+    phone_number = models.CharField(max_length=11,validators=[validate_iran_phone_number])
     gender = models.CharField(max_length=1,choices=GENDER_OPTIONS)
     id_number = models.CharField(max_length=12)
     state = models.CharField(max_length=255,)
     T_Shirt_size = models.CharField(max_length=10,choices=T_SHIRT_OPTION)
     relativ_name = models.CharField(max_length=255)
     relativ_last_name = models.CharField(max_length=255)
-    relativ_phone_number = models.CharField(max_length=11)
+    relativ_phone_number = models.CharField(max_length=11,validators=[validate_iran_phone_number])
     is_paid = models.BooleanField(default=False)
 
 
