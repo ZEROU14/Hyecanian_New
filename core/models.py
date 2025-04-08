@@ -1,5 +1,7 @@
+import re
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.forms import ValidationError
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, phone_number, password=None, **extra_fields):
@@ -20,9 +22,12 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self.create_user(phone_number, password, **extra_fields)
-
+def validate_iran_phone_number(value):
+    pattern = re.compile(r'^09\d{9}$')
+    if not pattern.match(value):
+        raise ValidationError(f'{value} is not a valid Iranian phone number. It should start with 09 and have 11 digits.') 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    phone_number = models.CharField(max_length=15, unique=True)
+    phone_number = models.CharField(max_length=15, unique=True,validators=[validate_iran_phone_number])
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
