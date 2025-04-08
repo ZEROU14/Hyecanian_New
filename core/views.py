@@ -16,7 +16,6 @@ User = get_user_model()
 class CustomUserViewSet(APIView):
     permission_classes = [IsAuthenticated]
 
-    
     def get(self, request, *args, **kwargs):
         serializer = CustomUserSerializer(request.user, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)

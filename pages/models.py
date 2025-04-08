@@ -57,10 +57,11 @@ class Event(models.Model):
     road_surface = models.ManyToManyField(Tags,related_name='surface')
     other_tags = models.ManyToManyField(Tags,related_name='event')
     max_runner = models.IntegerField()
+    link_to_social_media = models.URLField()
     
    
     def __str__(self):
-        return (f"with id : {self.id}, with title {self.title}")
+        return (f"With id : {self.id}, With title {self.title}")
 
 class Ticket(models.Model):
     title = models.CharField(max_length=225)
@@ -68,7 +69,7 @@ class Ticket(models.Model):
     price = models.IntegerField()
 
     def __str__(self):
-        return (f"ticket for event {self.event}")
+        return (f"Ticket For Event {self.event.title}")
 
 
 class Sponsor(models.Model):
@@ -118,4 +119,4 @@ class EventSignup(models.Model):
      
   
     def __str__(self):
-        return (f"with id {self.id}  Sign up for Ticket:  {self.ticket}  for user {self.user} " )
+        return (f"<<Id {self.id} >><< SignUp  for Ticket:  {self.ticket}  >><< For User {self.user}>> " )

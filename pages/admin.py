@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from .models import * 
 
-models_list = [Category, Event,Tags,TeamMember,Sponsor]
+models_list = [Category, Event,Tags,TeamMember,Sponsor,Ticket]
 
 
 admin.site.register(models_list)
@@ -20,7 +20,6 @@ class PaymentInline(admin.TabularInline):
     extra = 0
 
 class EventSignupAdmin(admin.ModelAdmin):
-    # list_display = ['ticket', 'user', 'phone_number', 'first_name', 'last_name', 'is_paid']
     inlines = [PaymentInline]
 
     def is_paid(self, obj):
@@ -29,4 +28,3 @@ class EventSignupAdmin(admin.ModelAdmin):
     is_paid.short_description = 'Paid'
 
 admin.site.register(EventSignup, EventSignupAdmin)
-admin.site.register(Ticket)
