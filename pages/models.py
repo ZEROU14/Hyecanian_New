@@ -1,3 +1,4 @@
+from datetime import timezone
 import re
 from django.db import models
 from django.conf import settings
@@ -111,7 +112,7 @@ class EventSignup(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     age = models.DateField()
-    singup_date = models.DateTimeField(auto_now_add=True)
+    singup_date = models.DateTimeField(auto_now_add=True,)
     phone_number = models.CharField(max_length=11,validators=[validate_iran_phone_number])
     gender = models.CharField(max_length=1,choices=GENDER_OPTIONS)
     id_number = models.CharField(max_length=12)

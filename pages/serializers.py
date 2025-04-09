@@ -52,8 +52,10 @@ class SponserSerialzer(serializers.ModelSerializer):
             ,"description"
         ]
         read_only_fields = ['id','event']
-        
-    
+
+from rest_framework import serializers
+
+
 class EventSerializer(serializers.ModelSerializer):
     link = serializers.HyperlinkedIdentityField(
             view_name = 'event-detail',

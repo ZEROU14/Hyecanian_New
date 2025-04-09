@@ -1,3 +1,4 @@
+from datetime import timezone
 from django.db import models
 from django.conf import settings
 # Create your models here.
@@ -16,7 +17,7 @@ class Payment(models.Model):
     authority = models.CharField(max_length=255)
     ref_id = models.CharField(max_length=255, null=True, blank=True)
     is_paid = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True,)
     event_signup = models.ForeignKey(EventSignup, on_delete=models.CASCADE, related_name='payments', null=True, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='payments') 
 

@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'taggit',
     'corsheaders',
-  
+    'django_jalali',
 
     # our apps
     'pages',
@@ -54,6 +54,24 @@ INSTALLED_APPS = [
     'payment'
     
 ]
+JALALI_DATE_DEFAULTS = {
+   # if change it to true then all dates of the list_display will convert to the Jalali.
+   'LIST_DISPLAY_AUTO_CONVERT': False,
+   'Strftime': {
+        'date': '%y/%m/%d',
+        'datetime': '%H:%M:%S _ %y/%m/%d',
+    },
+    'Static': {
+        'js': [
+            'admin/js/django_jalali.min.js',
+        ],
+        'css': {
+            'all': [
+              'admin/css/django_jalali.min.css',
+            ]
+        }
+    },
+}
 
 INTERNAL_IPS = [
     # ...
@@ -108,25 +126,12 @@ KAVEH_NEGAR = {
     'API_KEY': config('SMS_API_KEY_OTP'),
     'API_URL': 'https://api.kavenegar.com/v1/{api_key}/verify/lookup.json',
 }
-PAYMENT = {
-    'ZARINPAL_MERCHANT_ID': 'asfhashfokhjlkhjiuh',
-    'ZARINPAL_DESCRIPTION': 'reQESUT FOR TICKET ',
-    'ZARINPAL_CALLBACK_URL': '127.0.0.1:8000/',
-    'ZARINPAL_SANDBOX': False,  # Set to True for sandbox, False for production
-}
 
-ZARINPAL_URLS = {
-    'SANDBOX': {
-        'REQUEST_URL': 'https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentRequest.json',
-        'VERIFY_URL': 'https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentVerification.json',
-        'STARTPAY_URL': 'https://sandbox.zarinpal.com/pg/StartPay/',
-    },
-    'PRODUCTION': {
-        'REQUEST_URL': 'https://api.zarinpal.com/pg/v4/payment/request.json',
-        'VERIFY_URL': 'https://api.zarinpal.com/pg/v4/payment/verify.json',
-        'STARTPAY_URL': 'https://www.zarinpal.com/pg/StartPay/',
-    }
-}
+PAYMENT_API_KEY = config("PAYMENT_API_KEY")
+
+
+
+
 WSGI_APPLICATION = 'config.wsgi.application'
 
 

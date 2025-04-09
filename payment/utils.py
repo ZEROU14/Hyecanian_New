@@ -1,13 +1,11 @@
 
-
-
 import requests
 from django.conf import settings
 import logging
-
+from django.conf import settings
 logger = logging.getLogger(__name__)
 
-MERCHANT_ID = 'd596b8f9-1dca-4223-871c-aca31d9503d9'
+MERCHANT_ID = settings.PAYMENT_API_KEY
 ZARINPAL_REQUEST_URL = 'https://payment.zarinpal.com/pg/v4/payment/request.json'
 ZARINPAL_VERIFY_URL = 'https://payment.zarinpal.com/pg/v4/payment/verify.json'
 
@@ -16,18 +14,14 @@ ZARINPAL_SANDBOX_REQUEST_URL = 'https://sandbox.zarinpal.com/pg/v4/payment/reque
 ZARINPAL_SANDBOX_VERIFY_URL = 'https://sandbox.zarinpal.com/pg/v4/payment/verify.json'
 
 
-from decouple import config, Csv
 
-import requests
-from decouple import config
-import logging
 
 # Configure logging
 logger = logging.getLogger(__name__)
 
 
-def send_request(amount, description, mobile, callback_url, sandbox=True):
-    url = ZARINPAL_SANDBOX_REQUEST_URL 
+def send_request(amount, description, mobile, callback_url, sandbox=False):
+    url = ZARINPAL_SANDBOX_REQUEST_URL if sandbox else ZARINPAL_REQUEST_URL
     data = {
         "merchant_id": MERCHANT_ID,
         "amount": amount,
@@ -61,7 +55,7 @@ def send_request(amount, description, mobile, callback_url, sandbox=True):
         return {"status": False, "code": "UnexpectedResponse", "message": "Unexpected response format from Zarinpal"}
 
 def verify_payment(amount, authority, sandbox=True):
-    url = ZARINPAL_SANDBOX_VERIFY_URL 
+    url = ZARINPAL_SANDBOX_VERIFY_URL  
     data = {
         "merchant_id": MERCHANT_ID,
         "amount": amount,
