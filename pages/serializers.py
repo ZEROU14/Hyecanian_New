@@ -19,7 +19,7 @@ class TagsSerializer(serializers.ModelSerializer):
 
 class TicketSerializer(serializers.ModelSerializer):
     signup_link = serializers.SerializerMethodField()
-    event_name = serializers.StringRelatedField(source = 'event')
+    event_name = serializers.StringRelatedField(source = 'event.title')
     
     class Meta:
         model = Ticket
@@ -83,6 +83,9 @@ class EventSerializer(serializers.ModelSerializer):
                   ,'road_surface'
                   ,'tickets'
                   ,'team'
+                  ,'link_to_social_media'
+                  ,'start_address'
+                  ,'finish_address'
                   ]
     
 
@@ -103,8 +106,9 @@ class EventSignUpSerializer(serializers.ModelSerializer):
                   ,'relativ_last_name'
                   ,'relativ_phone_number'
                   ,'singup_date'
+                  ,'is_paid'
                   ]
 
-        read_only_fields = ['user','ticket','is_paid']
+        read_only_fields = ['user','ticket']
 
                         

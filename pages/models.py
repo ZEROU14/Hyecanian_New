@@ -25,6 +25,9 @@ class TeamMember(models.Model):
     position = models.CharField(max_length=250)
     image = models.ImageField(upload_to='team_member')
 
+    def __str__(self):
+        return  (f"Member Of  {self.event} Event , Name : {self.full_name} , position {self.position}")
+
 class Event(models.Model):
     GENDER_MALE = 'm'
     GENDER_FEMALE = 'f'
@@ -63,7 +66,7 @@ class Event(models.Model):
     
    
     def __str__(self):
-        return (f"With id : {self.id}, With title {self.title}")
+        return (f"Event ID : {self.id}, Event title : {self.title}")
 
 class Ticket(models.Model):
     title = models.CharField(max_length=225)
@@ -71,7 +74,7 @@ class Ticket(models.Model):
     price = models.IntegerField()
 
     def __str__(self):
-        return (f"Ticket For Event {self.event.title}")
+        return (f"id : {self.id} {self.title} For Event {self.event.title}")
 
 
 class Sponsor(models.Model):

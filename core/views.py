@@ -65,9 +65,10 @@ class GenerateOTPView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = OTPRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
+        phone_numbers = serializer.validated_data['phone_number']
+        phone_number = validate_iran_phone_number(phone_numbers)
         phone_number = serializer.validated_data['phone_number']
-        phone_number = validate_iran_phone_number(phone_number)
+        
        
         otp = generate_otp()
         cache.set(phone_number, otp, timeout=300)  # Cache OTP for 5 minutes
