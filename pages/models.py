@@ -1,4 +1,4 @@
-from datetime import timezone
+from datetime import datetime, timezone
 import re
 from django.db import models
 from django.conf import settings
@@ -28,6 +28,7 @@ class TeamMember(models.Model):
 
     def __str__(self):
         return  (f"Member Of  {self.event} Event , Name : {self.full_name} , position {self.position}")
+
 
 class Event(models.Model):
     GENDER_MALE = 'm'
@@ -64,6 +65,7 @@ class Event(models.Model):
     other_tags = models.ManyToManyField(Tags,related_name='event')
     max_runner = models.IntegerField()
     link_to_social_media = models.URLField()
+    start_time = models.TimeField(default="00:00:00")
     
    
     def __str__(self):
@@ -73,6 +75,9 @@ class Ticket(models.Model):
     title = models.CharField(max_length=225)
     event = models.ForeignKey(Event,on_delete=models.PROTECT,related_name='tickets')
     price = models.IntegerField()
+    distanc = models.IntegerField()
+    start_time =models.TimeField(default="00:00:00")
+
 
     def __str__(self):
         return (f"id : {self.id} {self.title} For Event {self.event.title}")

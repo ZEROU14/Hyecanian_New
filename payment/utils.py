@@ -14,13 +14,13 @@ ZARINPAL_SANDBOX_REQUEST_URL = 'https://sandbox.zarinpal.com/pg/v4/payment/reque
 ZARINPAL_SANDBOX_VERIFY_URL = 'https://sandbox.zarinpal.com/pg/v4/payment/verify.json'
 
 
-
+SANDBOX = settings.SANDBOX
 
 # Configure logging
 logger = logging.getLogger(__name__)
 
 
-def send_request(amount, description, mobile, callback_url, sandbox=False):
+def send_request(amount, description, mobile, callback_url, sandbox=SANDBOX):
     url = ZARINPAL_SANDBOX_REQUEST_URL if sandbox else ZARINPAL_REQUEST_URL
     data = {
         "merchant_id": MERCHANT_ID,
@@ -54,8 +54,8 @@ def send_request(amount, description, mobile, callback_url, sandbox=False):
         logger.error(f"Unexpected response format: {response_data}")
         return {"status": False, "code": "UnexpectedResponse", "message": "Unexpected response format from Zarinpal"}
 
-def verify_payment(amount, authority, sandbox=True):
-    url = ZARINPAL_SANDBOX_VERIFY_URL  
+def verify_payment(amount, authority, sandbox=SANDBOX):
+    url = ZARINPAL_SANDBOX_VERIFY_URL if sandbox else ZARINPAL_REQUEST_URL
     data = {
         "merchant_id": MERCHANT_ID,
         "amount": amount,

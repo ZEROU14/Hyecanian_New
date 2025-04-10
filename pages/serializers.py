@@ -1,6 +1,37 @@
 from django.urls import reverse
 from rest_framework import serializers
 from .models import *
+import jdatetime
+
+class JalaliDateField(serializers.DateField):
+    """
+    A custom serializer field that:
+      - Converts a Gregorian date (stored in the model)
+        to a Jalali-formatted string for API output.
+      - Converts a provided Jalali date string to a Gregorian date
+        for model storage.
+    """
+
+    def to_representation(self, value):
+        # Convert the Gregorian date to a Jalali date string.
+        if value:
+            jalali_date = jdatetime.date.fromgregorian(date=value)
+            # Customize the format as needed, e.g., 'YYYY-MM-DD'
+            return jalali_date.strftime('%Y-%m-%d')
+        return None
+
+    def to_internal_value(self, data):
+        # Expecting a string formatted in Jalali date, e.g., '1402-05-12'.
+        try:
+            parts = data.split("-")
+            if len(parts) != 3:
+                raise ValueError("Please use the format YYYY-MM-DD for the Jalali date.")
+            jy, jm, jd = map(int, parts)
+            # Convert the Jalali input to Gregorian.
+            gregorian_date = jdatetime.date(jy, jm, jd).togregorian()
+            return gregorian_date
+        except Exception as exc:
+            raise serializers.ValidationError("Invalid Jalali date format. Expected YYYY-MM-DD.") from exc
 
 
 class CategorySeriaizer(serializers.ModelSerializer):
@@ -23,7 +54,7 @@ class TicketSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Ticket
-        fields = ['title','price','event_name','signup_link']
+        fields = ['id','title','price','event_name','signup_link']
         read_only_fields = ['id','event',]
         
     def get_signup_link(self, obj):
@@ -61,6 +92,7 @@ class EventSerializer(serializers.ModelSerializer):
             view_name = 'event-detail',
             lookup_field = 'pk'
     )
+    event_date = JalaliDateField()
         
     other_tags =TagsSerializer(many= True)
     road_profile_tag =TagsSerializer(many=True)
@@ -92,13 +124,14 @@ class EventSerializer(serializers.ModelSerializer):
     
 
 class EventSignUpSerializer(serializers.ModelSerializer):
-
+    age = JalaliDateField()
     class Meta:
         model = EventSignup
         fields = [
                   "id",
                   'first_name',
-                  'last_name','age',
+                  'last_name',
+                  'age',
                   'phone_number',
                   'gender',
                   'id_number',
@@ -111,6 +144,6 @@ class EventSignUpSerializer(serializers.ModelSerializer):
                   ,'is_paid'
                   ]
 
-        read_only_fields = ['user','ticket']
+        read_only_fields = ['user','ticket','is_paid']
 
                         

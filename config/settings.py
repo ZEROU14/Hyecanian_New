@@ -223,7 +223,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # This backend supports permissions
     # Include your custom authentication backend if you have one
 ]
-
+SANDBOX = False
 
 
 # Session settings
