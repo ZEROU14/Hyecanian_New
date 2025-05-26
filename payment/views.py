@@ -9,14 +9,15 @@ from django.urls import reverse
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
 import logging
-
+import os
 logger = logging.getLogger(__name__)
 
 
 class PaymentRequestView(APIView):
     permission_classes = [IsAuthenticated]
-
+    
     def post(self, request, ticket_id):
+
         event_signup_id = request.data.get('event_signup_id')
         if not event_signup_id:
             raise ValidationError({"error": "Event sign-up ID is required."})
@@ -36,15 +37,13 @@ class PaymentRequestView(APIView):
             raise ValidationError({"error": "Phone number is required."})
 
         amount = int(ticket.price) * 10  # Assuming the Ticket model has a price field
-        callback_url = request.build_absolute_uri(reverse('payment:verify'))
-        sandbox = request.data.get('sandbox', False)
+        callback_url = "https://hyrcaniarun.ir/payment"
 
         result = send_request(
             amount=amount,
             description=f"Payment for {ticket.title} {phone_number}",
             mobile=phone_number,
-            callback_url=callback_url,
-            sandbox=sandbox
+            callback_url=callback_url
         )
 
         if result['status']:
@@ -59,6 +58,7 @@ class PaymentRequestView(APIView):
             return Response({'payment_url': result['url']}, status=status.HTTP_200_OK)
         else:
             raise ValidationError({"error": f"Error code {result['code']}, {result['message']}"})
+
 class PaymentVerifyView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -74,10 +74,8 @@ class PaymentVerifyView(APIView):
         except Payment.DoesNotExist:
             return Response({'status': False, 'message': 'Payment does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        sandbox = request.GET.get('sandbox', False)
-
         if payment_status == 'OK':
-            result = verify_payment(float(payment.amount) * 10, authority, sandbox=sandbox)
+            result = verify_payment(float(payment.amount) * 10, authority)
             if result['status']:
                 payment.is_paid = True
                 payment.ref_id = result['ref_id']
@@ -93,9 +91,12 @@ class PaymentVerifyView(APIView):
                     'amount': float(payment.amount),
                 }, status=status.HTTP_200_OK)
             else:
+                # Payment verification failed
                 return Response({
                     'status': False,
                     'message': f"Payment verification failed. Error code: {result['code']}, {result['message']}"
                 }, status=status.HTTP_400_BAD_REQUEST)
         else:
+            # Payment was canceled by the user
             return Response({'status': False, 'message': 'Payment was canceled by the user.'}, status=status.HTTP_400_BAD_REQUEST)
+

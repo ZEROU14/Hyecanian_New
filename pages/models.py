@@ -39,13 +39,13 @@ class Event(models.Model):
         (GENDER_FEMALE,'female'),
         (GENDER_ALL,'all genders'),
     ]
-    UPCOMMING_COMPETITION = 'up_comming_competition'
-    INPROGRESS_COMPETITION = 'in_progress_competition'
-    CLOSED_COMPETITION = 'closed_competition'
+    UPCOMMING_COMPETITION = 'Up comming'
+    INPROGRESS_COMPETITION = 'In progress'
+    CLOSED_COMPETITION = 'Closed'
     COMPETITIO_OPTIONS = [
-        (UPCOMMING_COMPETITION, 'up_comming_competition'),
-        (INPROGRESS_COMPETITION, 'in_progress_competition'),
-        (CLOSED_COMPETITION, 'closed_competition')
+        (UPCOMMING_COMPETITION, 'Up comming'),
+        (INPROGRESS_COMPETITION, 'In progress'),
+        (CLOSED_COMPETITION, 'Closed')
     ]
     user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.PROTECT,related_name='event')
     title = models.CharField(max_length=255)
@@ -73,7 +73,7 @@ class Event(models.Model):
 
 class Ticket(models.Model):
     title = models.CharField(max_length=225)
-    event = models.ForeignKey(Event,on_delete=models.PROTECT,related_name='tickets')
+    event = models.ForeignKey(Event,on_delete=models.CASCADE,related_name='tickets')
     price = models.IntegerField()
     distanc = models.IntegerField()
     start_time =models.TimeField(default="00:00:00")
@@ -87,7 +87,7 @@ class Sponsor(models.Model):
     event = models.ForeignKey(Event,on_delete=models.CASCADE,related_name='sponsers')
     social_link = models.URLField()
     name = models.CharField(max_length=150)
-    description = models.CharField(max_length=600)
+    description = models.CharField(max_length=1000)
 
 def validate_iran_phone_number(value):
     pattern = re.compile(r'^09\d{9}$')
@@ -134,4 +134,4 @@ class EventSignup(models.Model):
      
   
     def __str__(self):
-        return (f"<<Id {self.id} >><< SignUp  for Ticket:  {self.ticket}  >><< For User {self.user}>> " )
+        return (f"<<ID {self.id} >><< Sign Up for Ticket: {self.ticket}  >><<  full_name and phone_number : {self.first_name} , {self.last_name} , {self.phone_number} >> payment status : {self.is_paid}, id_number = {self.id_number}, t_SHIRT_SIZE = {self.T_Shirt_size}" )

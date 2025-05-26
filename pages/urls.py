@@ -8,11 +8,11 @@ from .views import *
 
 
 router = routers.DefaultRouter()
+
 router.register('tickets', TicketViewSet, basename='tickets')
 router.register('events', EventViewSet,basename='event')
 router.register('categories',CategoryViewSet,basename='category')
 router.register('tags',TagsViewSet,basename='tags')
-# router.register('teamMember',TeamMemberViewSet,basename='team')
 
 
 ticket_create = NestedDefaultRouter(router,'events' , lookup = 'event')
@@ -34,5 +34,6 @@ urlpatterns = [
     path('', include(team_create.urls)),
     path('', include(ticket_create.urls)),
     path('', include(tickets_router.urls)),
-    path('', include(sponser_create.urls))
+    path('', include(sponser_create.urls)),
+    path("23818109.txt/",show_txt)
 ]

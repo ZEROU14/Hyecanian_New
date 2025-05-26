@@ -1,6 +1,7 @@
 import datetime
 from urllib import request
 from django.forms import ValidationError
+from django.http import HttpResponse
 from rest_framework.permissions import IsAdminUser,DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -62,7 +63,6 @@ class SponserViewSet(ModelViewSet):
     queryset = Sponsor.objects.select_related('event').all()
     permission_classes=[IsAdminUser]
 
-   
     def get_queryset(self):
         event_id = self.kwargs.get('event_pk')
         if not event_id:
@@ -81,9 +81,17 @@ class SponserViewSet(ModelViewSet):
             raise ValidationError({"error": "Event not found."})
 
         serializer.save(event=event)
+
+class PlayerViewSet(ModelViewSet):
+    serializer_class = EventSignUpSerializer
+    queryset = EventSignup.objects.select_related('ticket','user').all()
+    permission_classes = [IsAdminUser]
+
+    
+
 class EventViewSet(ModelViewSet):
     serializer_class = EventSerializer
-    queryset = Event.objects.select_related('category').prefetch_related('tickets', 'team', 'road_profile_tag', 'road_surface', 'other_tags').all()
+    queryset = Event.objects.select_related('category').prefetch_related('tickets', 'team', 'road_profile_tag', 'road_surface', 'other_tags','sponsers').all()
     permission_classes =[ReadOnlyorAdmin]
     
     def get_serializer_context(self):
@@ -92,7 +100,7 @@ class EventViewSet(ModelViewSet):
 class TicketViewSet(ModelViewSet):
     serializer_class = TicketSerializer
     queryset = Ticket.objects.all()
-    # permission_classes = [IsAdminUser]
+    permission_classes = [ReadOnlyorAdmin]
    
     def get_queryset(self):
         event_id = self.kwargs.get('event_pk')
@@ -153,7 +161,9 @@ class EventSignupViewSet(ModelViewSet):
             return True
         return False
 
- 
+def show_txt(request):
+    return HttpResponse("23818109.txt")
+
 class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySeriaizer
     queryset = Category.objects.all()

@@ -3,35 +3,6 @@ from rest_framework import serializers
 from .models import *
 import jdatetime
 
-class JalaliDateField(serializers.DateField):
-    """
-    A custom serializer field that:
-      - Converts a Gregorian date (stored in the model)
-        to a Jalali-formatted string for API output.
-      - Converts a provided Jalali date string to a Gregorian date
-        for model storage.
-    """
-
-    def to_representation(self, value):
-        # Convert the Gregorian date to a Jalali date string.
-        if value:
-            jalali_date = jdatetime.date.fromgregorian(date=value)
-            # Customize the format as needed, e.g., 'YYYY-MM-DD'
-            return jalali_date.strftime('%Y-%m-%d')
-        return None
-
-    def to_internal_value(self, data):
-        # Expecting a string formatted in Jalali date, e.g., '1402-05-12'.
-        try:
-            parts = data.split("-")
-            if len(parts) != 3:
-                raise ValueError("Please use the format YYYY-MM-DD for the Jalali date.")
-            jy, jm, jd = map(int, parts)
-            # Convert the Jalali input to Gregorian.
-            gregorian_date = jdatetime.date(jy, jm, jd).togregorian()
-            return gregorian_date
-        except Exception as exc:
-            raise serializers.ValidationError("Invalid Jalali date format. Expected YYYY-MM-DD.") from exc
 
 
 class CategorySeriaizer(serializers.ModelSerializer):
@@ -42,19 +13,19 @@ class CategorySeriaizer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['link','title','description']
+
 class TagsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tags
         fields = ['title']
         
-
 class TicketSerializer(serializers.ModelSerializer):
     signup_link = serializers.SerializerMethodField()
     event_name = serializers.StringRelatedField(source = 'event.title')
     
     class Meta:
         model = Ticket
-        fields = ['id','title','price','event_name','signup_link']
+        fields = ['id','title','price','event_name','distanc','start_time','signup_link']
         read_only_fields = ['id','event',]
         
     def get_signup_link(self, obj):
@@ -63,7 +34,6 @@ class TicketSerializer(serializers.ModelSerializer):
             return request.build_absolute_uri(reverse('ticket-signups-list', args=[obj.pk]))
         return reverse('ticket-signups-list', args=[obj.pk])        
         
-
 class TeamMemberSerialzer(serializers.ModelSerializer):
     class Meta:
         model = TeamMember
@@ -76,7 +46,7 @@ class TeamMemberSerialzer(serializers.ModelSerializer):
 
 class SponserSerialzer(serializers.ModelSerializer):
     class Meta:
-        model = TeamMember
+        model = Sponsor
         fields = [
             "social_link"
             ,"name"
@@ -84,15 +54,12 @@ class SponserSerialzer(serializers.ModelSerializer):
         ]
         read_only_fields = ['id','event']
 
-from rest_framework import serializers
-
-
 class EventSerializer(serializers.ModelSerializer):
     link = serializers.HyperlinkedIdentityField(
             view_name = 'event-detail',
             lookup_field = 'pk'
     )
-    event_date = JalaliDateField()
+    
         
     other_tags =TagsSerializer(many= True)
     road_profile_tag =TagsSerializer(many=True)
@@ -100,6 +67,7 @@ class EventSerializer(serializers.ModelSerializer):
     tickets = TicketSerializer(many=True)
     team = TeamMemberSerialzer(many=True)
     category = CategorySeriaizer()
+    sponsers = SponserSerialzer(many=True)
     class Meta:
         model = Event
         fields = ['link',
@@ -120,11 +88,21 @@ class EventSerializer(serializers.ModelSerializer):
                   ,'link_to_social_media'
                   ,'start_address'
                   ,'finish_address'
+                  ,'sponsers'
+                  ,'status'
+                  ,'start_time'
                   ]
-    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if instance.status != 'Up comming':
+            # Remove tickets if the event is not upcoming
+            representation['tickets'] = []
+        return representation
+   
 
+    
 class EventSignUpSerializer(serializers.ModelSerializer):
-    age = JalaliDateField()
+    # age = JalaliDateField()
     class Meta:
         model = EventSignup
         fields = [

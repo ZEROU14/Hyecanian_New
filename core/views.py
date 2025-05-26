@@ -48,6 +48,10 @@ class VerifyOTPView(APIView):
             logger.error(f"Error retrieving or creating user with phone number: {phone_number} - {e}")
             return Response({"error": "User retrieval failed."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+        cache.delete(phone_number)
+        logger.info(f"OTP cache deleted for phone number: {phone_number}")
+
         # Generate JWT for the user
         refresh = RefreshToken.for_user(user)
         access_token = str(refresh.access_token)
@@ -61,6 +65,7 @@ def validate_iran_phone_number(value):
     pattern = re.compile(r'^09\d{9}$')
     if not pattern.match(value):
         raise ValidationError(f'{value} is not a valid Iranian phone number. It should start with 09 and have 11 digits.') 
+    
 class GenerateOTPView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = OTPRequestSerializer(data=request.data)
@@ -83,3 +88,36 @@ class GenerateOTPView(APIView):
         except Exception as e:
             logger.error(f"Failed to send OTP to {phone_number}: {e}")
             return Response({"error": "Failed to send OTP. Please try again later."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+
+class VerifyOTPView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = OTPVerifySerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        phone_number = serializer.validated_data['phone_number']
+        otp = serializer.validated_data['otp']
+        # Retrieve OTP from cache
+        saved_otp = cache.get(phone_number)
+        if not saved_otp or str(saved_otp) != str(otp):
+            logger.error(f"Invalid or expired OTP for phone number: {phone_number}")
+            return Response({"error": "Invalid or expired OTP."}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            # Dynamically create user if they don't exist
+            user, created = User.objects.get_or_create(phone_number=phone_number)
+            if created:
+                user.set_password(None)  # Set a default password or handle password setting appropriately
+                user.save()
+        except Exception as e:
+            logger.error(f"Error retrieving or creating user with phone number: {phone_number} - {e}")
+            return Response({"error": "User retrieval failed."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+        # Remove the OTP from cache after successful verification
+        cache.delete(phone_number)
+        logger.info(f"OTP cache deleted for phone number: {phone_number}")
+        
+        # Generate JWT for the user
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+        refresh_token = str(refresh)
+        logger.info(f"OTP verified successfully for phone number: {phone_number}")
+        return Response({"access_token": access_token, "refresh_token": refresh_token}, status=status.HTTP_200_OK)

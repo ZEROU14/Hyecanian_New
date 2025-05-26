@@ -28,13 +28,11 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path("__debug__/", include("debug_toolbar.urls")),
     path('admin/', admin.site.urls),
-    path('',include('pages.urls')),
-    path('blog/',include('blogs.urls')),
-    # path('auth/', include('djoser.urls')),
-    # path('auth/', include('djoser.urls.jwt')),
+    path('api/',include('pages.urls')),
+    path('api/blog/',include('blogs.urls')),
     path('api/',include('core.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('payment/', include('payment.urls')),
+    path('api/payment/', include('payment.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

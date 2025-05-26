@@ -12,7 +12,7 @@ from django.http import HttpResponse
 
 class Payment(models.Model):
     phone_number = models.CharField(max_length=15)
-    ticket = models.ForeignKey('pages.Ticket', on_delete=models.CASCADE)
+    ticket = models.ForeignKey('pages.Ticket', on_delete=models.PROTECT)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     authority = models.CharField(max_length=255)
     ref_id = models.CharField(max_length=255, null=True, blank=True)

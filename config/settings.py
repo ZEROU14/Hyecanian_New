@@ -22,12 +22,16 @@ env.read_env()
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str("DJANGO_SECRET_KEY")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.hyrcaniarun.ir','hyrcaniarun.ir',"https://hyrcaniarun.ir",'http://localhost:5173',]
+
+# ALLOWED_HOSTS = []
+
+
 
 
 # Application definition
@@ -79,7 +83,9 @@ INTERNAL_IPS = [
     # ...
 ]
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Your frontend URL
+    "https://hyrcaniarun.ir",
+    'http://localhost:5173',
+# Your frontend URL
 ]
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -123,11 +129,13 @@ from decouple import config, Csv
 
 
 KAVEH_NEGAR = {
-    'API_KEY': config('SMS_API_KEY_OTP'),
+    'API_KEY': os.getenv('SMS_API_KEY_OTP'),
     'API_URL': 'https://api.kavenegar.com/v1/{api_key}/verify/lookup.json',
 }
 
-PAYMENT_API_KEY = config("PAYMENT_API_KEY")
+
+
+
 
 
 
@@ -137,18 +145,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
-        'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'web',
-        'HOST': 'localhost',
-        'USER': 'root',
-        'PASSWORD': 'password',
-    }
+    'default': {
+        'ENGINE':   'django.db.backends.mysql', 
+        'NAME':     os.getenv("MYSQL_DB_NAME"), 
+        'USER':     os.getenv("MYSQL_DB_USER"),
+        'PASSWORD': os.getenv("MYSQL_DB_PASS"),
+        'HOST':     os.getenv("MYSQL_DB_HOST"),
+        'PORT':     os.getenv("MYSQL_DB_PORT"),
+    },
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -171,9 +177,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -204,11 +210,18 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+
+ZARINPAL_VERIFY_URL = "https://payment.zarinpal.com/pg/v4/payment/request.json"
+ZARINPAL_REQUEST_URL = "https://payment.zarinpal.com/pg/v4/payment/verify.json"
+
+
 from datetime import timedelta
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES":('JWT',),
-    "ACCESS_TOKEN_LIFETIME" : timedelta(days=30),
-}
+    "ACCESS_TOKEN_LIFETIME" : timedelta(days=7),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+} 
 SER = {
     'SERIALIZERS':{
         'user_create' : 'core.serializers.CustomUserCreateSerializer',
@@ -223,7 +236,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # This backend supports permissions
     # Include your custom authentication backend if you have one
 ]
-SANDBOX = False
+SANDBOX = True
 
 
 # Session settings
